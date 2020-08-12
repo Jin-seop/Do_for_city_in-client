@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "DO.SI.IN-client",
-    "slug": "DO.SI.IN-client",
+    "slug": "DO-SI-IN-client",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
