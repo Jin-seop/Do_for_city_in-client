@@ -9,7 +9,7 @@
 
 > 미완성 :soon:
 
-> 수정 :edit:
+> 수정 :recycle:
 
 > 삭제 :no_entry_sign:
 
