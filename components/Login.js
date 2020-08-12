@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function App() {
+export default function Login() {
   return (
     <View style={styles.align}>
       <View style={styles.mainBox}>
