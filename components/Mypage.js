@@ -11,7 +11,6 @@ export default function mypage(props) {
           <Text style={styles.userName}>유저명</Text>
           <Text style={styles.mypageText}>마이페이지</Text>
         </View>
-
         <View style={styles.contantsListContainer}>
           <Text style={styles.contantsListText}>내가 쓴 글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
@@ -29,7 +28,6 @@ export default function mypage(props) {
             </TouchableOpacity>
           </ScrollView>
         </View>
-
         <View style={styles.comentsListContainer}>
           <Text style={styles.contantsListText}>내가 쓴 글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
@@ -47,7 +45,6 @@ export default function mypage(props) {
             </TouchableOpacity>
           </ScrollView>
         </View>
-
         <View style={styles.reviseButton}>
           <TouchableOpacity>
             <Text>내 정보 수정하기</Text>
