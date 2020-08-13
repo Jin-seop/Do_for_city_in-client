@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react
 import { TextInput } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
-export default function Write() {
+export default function Write(props) {
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
@@ -16,7 +16,10 @@ export default function Write() {
           <TouchableOpacity style={styles.buttons}>
             <Text style={styles.buttonText}>사진첨부</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.buttons}
+            onPress={() => props.navigation.navigate('PostPage')}
+          >
             <Text style={styles.buttonText}>글올리기</Text>
           </TouchableOpacity>
         </View>
