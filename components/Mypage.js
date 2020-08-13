@@ -7,6 +7,23 @@ export default function mypage(props) {
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.body}>
+        <View style={styles.sideButton}>
+          <TouchableOpacity style={styles.menuContainer}>
+            <Text>메뉴</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.mypageButton}
+            onPress={() => props.navigation.navigate('MainPage')}
+          >
+            <Text style={styles.menuText}>메인페이지</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => props.navigation.navigate('Login')}
+          >
+            <Text style={styles.menuText}>로그아웃</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.userNameBox}>
           <Text style={styles.userName}>유저명</Text>
           <Text style={styles.mypageText}>마이페이지</Text>
@@ -49,7 +66,7 @@ export default function mypage(props) {
         </View>
 
         <View style={styles.reviseButton}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => props.navigation.navigate('EditUserInfo')}>
             <Text>내 정보 수정하기</Text>
           </TouchableOpacity>
         </View>
@@ -73,6 +90,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  sideButton: {
+    position: 'absolute',
+    left: 15,
+    top: 25,
+  },
+  menuContainer: {
+    width: 50,
+    height: 40,
+    backgroundColor: '#F3ECA5',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  mypageButton: {
+    width: 50,
+    height: 40,
+    backgroundColor: '#F3ECA5',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoutButton: {
+    width: 50,
+    height: 40,
+    backgroundColor: '#F3ECA5',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  menuText: { fontSize: 10 },
   userNameBox: {
     position: 'absolute',
     top: 40,
