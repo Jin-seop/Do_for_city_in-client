@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function mypage() {
+export default function Mypage() {
   return (
     <View style={styles.body}>
       <View style={styles.userNameBox}>
