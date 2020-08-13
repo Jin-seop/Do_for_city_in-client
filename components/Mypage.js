@@ -1,9 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function mypage() {
+export default function Mypage() {
   return (
     <View style={styles.body}>
       <View style={styles.userNameBox}>
@@ -13,17 +12,17 @@ export default function mypage() {
 
       <View style={styles.contantsListContainer}>
         <Text style={styles.contantsListText}>내가 쓴 글</Text>
-        <ScrollView style={{ width: 180, height: 150 }}>
-          <TouchableOpacity style={{ margin: 10 }}>
+        <ScrollView style={styles.scrollContainer}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-게시글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-게시글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-게시글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-게시글</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -31,17 +30,17 @@ export default function mypage() {
 
       <View style={styles.comentsListContainer}>
         <Text style={styles.contantsListText}>내가 쓴 글</Text>
-        <ScrollView style={{ width: 180, height: 150 }}>
-          <TouchableOpacity style={{ margin: 10 }}>
+        <ScrollView style={styles.scrollContainer}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-댓글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-댓글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-댓글</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ margin: 10 }}>
+          <TouchableOpacity style={styles.contantsContainer}>
             <Text>-댓글</Text>
           </TouchableOpacity>
         </ScrollView>
@@ -118,4 +117,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  scrollContainer: { width: 180, height: 150 },
+  contantsContainer: { margin: 10 },
 });
