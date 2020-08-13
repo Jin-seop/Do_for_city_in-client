@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
-import cityDark from './assets/city_dark.jpg';
+import cityDark from '../assets/city_dark.jpg';
 
 export default function MainPage() {
   return (

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import cityWhite from './assets/city_white.jpg';
+import cityWhite from '../assets/city_white.jpg';
 
 export default function Login() {
   return (
