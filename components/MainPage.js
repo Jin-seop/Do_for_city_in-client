@@ -128,7 +128,13 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     borderRadius: 5,
   },
-  mainScrollContainer: { position: 'absolute', top: 100, left: 90, width: 220, height: 500 },
+  mainScrollContainer: {
+    position: 'absolute',
+    top: 100,
+    left: 90,
+    width: 220,
+    height: 500,
+  },
   contantContainer: {
     width: 220,
     height: 150,

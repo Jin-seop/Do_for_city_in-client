@@ -7,6 +7,7 @@ import Mypage from './components/Mypage';
 import PostPage from './components/Postpage';
 import WritePage from './components/Write';
 import ErrorPage from './components/ErrorPage';
+import EditUserInfo from './components/EditUserInfo';
 
 const Route = createStackNavigator(
   {
@@ -27,6 +28,9 @@ const Route = createStackNavigator(
     },
     WritePage: {
       screen: WritePage,
+    },
+    EditUserInfo: {
+      screen: EditUserInfo,
     },
     ErrorPage: {
       screen: ErrorPage,
