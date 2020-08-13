@@ -1,10 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import { createAppContainer } from 'react-navigation';
 import cityWhite from '../assets/city_white.jpg';
-import MainPage from './MainPage';
-import SignUp from './SignUp';
 
 export default function Login() {
   return (
@@ -21,7 +18,7 @@ export default function Login() {
           <TextInput placeholder="비밀번호" style={styles.textInput} />
         </View>
         <View style={styles.loginContainer}>
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => <MainPage />}>
+          <TouchableOpacity style={styles.buttonContainer}>
             <Text>로그인 </Text>
           </TouchableOpacity>
         </View>
