@@ -52,7 +52,6 @@ export default function PostPage(props) {
             </TouchableOpacity>
           </View>
         </View>
-
         <View style={styles.commetList}>
           <ScrollView>
             <View style={styles.commetContainer}>
@@ -67,7 +66,6 @@ export default function PostPage(props) {
                 <Text>수정</Text>
               </TouchableOpacity>
             </View>
-
             <View style={styles.commetContainer}>
               <View style={styles.commetWritter}>
                 <Text>작성자</Text>
