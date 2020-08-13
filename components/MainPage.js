@@ -27,7 +27,10 @@ export default function MainPage(props) {
         </View>
         <View style={styles.mainScrollContainer}>
           <ScrollView>
-            <TouchableOpacity style={styles.contantContainer}>
+            <TouchableOpacity
+              style={styles.contantContainer}
+              onPress={() => props.navigation.navigate('PostPage')}
+            >
               <View style={styles.contantTextContainer}>
                 <Text>게시글</Text>
               </View>
