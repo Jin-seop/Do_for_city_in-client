@@ -1,21 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createAppContainer } from 'react-navigation';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import MainPage from './components/MainPage';
+import Mypage from './components/Mypage';
+import PostPage from './components/Postpage';
+import WritePage from './components/Write';
+import ErrorPage from './components/ErrorPage';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const Route = createStackNavigator(
+  {
+    Login: {
+      screen: Login,
+    },
+    SignUp: {
+      screen: SignUp,
+    },
+    MainPage: {
+      screen: MainPage,
+    },
+    Mypage: {
+      screen: Mypage,
+    },
+    PostPage: {
+      screen: PostPage,
+    },
+    WritePage: {
+      screen: WritePage,
+    },
+    ErrorPage: {
+      screen: ErrorPage,
+    },
   },
-});
+  {
+    defaultNavigationOptions: {
+      header: null,
+      title: null,
+    },
+  }
+);
+
+const App = createAppContainer(Route);
+
+export default App;

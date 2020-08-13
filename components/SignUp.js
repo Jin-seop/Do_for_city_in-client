@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import cityDark from './assets/city_dark.jpg';
+import cityDark from '../assets/city_dark.jpg';
 
-export default function SignUp() {
+export default function SignUp(props) {
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
@@ -20,10 +20,16 @@ export default function SignUp() {
           <TextInput style={styles.inputBox} placeholder="Email 입력" />
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.signUpButton}>
+          <TouchableOpacity
+            style={styles.signUpButton}
+            onPress={() => props.navigation.navigate('Login')}
+          >
             <Text style={styles.buttonText}>가입하기</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.backButton}>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => props.navigation.navigate('Login')}
+          >
             <Text style={styles.buttonText}>뒤로가기</Text>
           </TouchableOpacity>
         </View>

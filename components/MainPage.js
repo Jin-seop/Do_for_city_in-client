@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
-import cityDark from './assets/city_dark.jpg';
+import cityDark from '../assets/city_dark.jpg';
 
-export default function MainPage() {
+export default function MainPage(props) {
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
@@ -11,10 +11,16 @@ export default function MainPage() {
           <TouchableOpacity style={styles.menuContainer}>
             <Text>메뉴</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mypageButton}>
+          <TouchableOpacity
+            style={styles.mypageButton}
+            onPress={() => props.navigation.navigate('Mypage')}
+          >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => props.navigation.navigate('Login')}
+          >
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
           <TextInput placeholder="검색" style={styles.serchBar} />
@@ -68,7 +74,7 @@ export default function MainPage() {
             </TouchableOpacity>
           </ScrollView>
           <View style={styles.writterButton}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate('WritePage')}>
               <Text>작성</Text>
             </TouchableOpacity>
           </View>

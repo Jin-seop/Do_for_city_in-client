@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import cityDark from './assets/city_dark.jpg';
+import cityDark from '../assets/city_dark.jpg';
 
-export default function mypage() {
+export default function mypage(props) {
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.body}>
@@ -54,7 +54,7 @@ export default function mypage() {
           </TouchableOpacity>
         </View>
         <View style={styles.secessionButton}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
             <Text>회원 탈퇴</Text>
           </TouchableOpacity>
         </View>

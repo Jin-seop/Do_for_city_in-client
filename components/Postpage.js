@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { TouchableOpacity, ScrollView, TextInput } from 'react-native-gesture-handler';
-import cityDark from './assets/city_dark.jpg';
+import cityDark from '../assets/city_dark.jpg';
 
-export default function PostPage() {
+export default function PostPage(props) {
   return (
     <KeyboardAvoidingView behavior="height" enabled>
       <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
@@ -11,10 +11,22 @@ export default function PostPage() {
           <TouchableOpacity style={styles.menuContainer}>
             <Text>메뉴</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.mypageButton}>
+          <TouchableOpacity
+            style={styles.mypageButton}
+            onPress={() => props.navigation.navigate('MainPage')}
+          >
+            <Text style={styles.menuText}>메인페이지</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.mypageButton}
+            onPress={() => props.navigation.navigate('Mypage')}
+          >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => props.navigation.navigate('Login')}
+          >
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
