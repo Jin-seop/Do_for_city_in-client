@@ -1,43 +1,50 @@
-
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import cityDark from './assets/city_dark.jpg';
 
 export default function SignUp() {
-  // const [userId, setUserId] = useState("");
   return (
-    <View style={styles.container}>
-      <Text style={styles.logo}>DO.SI.IN{'\n'}회원가입</Text>
-      <View style={styles.idView}>
-        <TextInput
-          style={styles.idInputBox}
-          placeholder="아이디"
-          // onChangeText={(userId) => setUserId(text)}
-          // defaultValue={userId}
-        />
-        <TouchableOpacity style={styles.idCheckButton}>
-          <Text style={styles.buttonText}>중복확인</Text>
-        </TouchableOpacity>
+    <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
+      <View style={styles.container}>
+        <Text style={styles.logo}>DO.SI.IN{'\n'}회원가입</Text>
+        <View style={styles.inputContainer}>
+          <View style={styles.idView}>
+            <TextInput style={styles.idInputBox} placeholder="아이디" />
+            <TouchableOpacity style={styles.idCheckButton}>
+              <Text style={styles.buttonText}>중복확인</Text>
+            </TouchableOpacity>
+          </View>
+          <TextInput style={styles.inputBox} placeholder="비밀번호" />
+          <TextInput style={styles.inputBox} placeholder="비밀번호 재확인" />
+          <TextInput style={styles.inputBox} placeholder="Email 입력" />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.signUpButton}>
+            <Text style={styles.buttonText}>가입하기</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.backButton}>
+            <Text style={styles.buttonText}>뒤로가기</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <TextInput style={styles.inputBox} placeholder="비밀번호" />
-      <TextInput style={styles.inputBox} placeholder="비밀번호 재확인" />
-      <TextInput style={styles.inputBox} placeholder="Email 입력" />
-      <TouchableOpacity style={styles.signUpButton}>
-        <Text style={styles.buttonText}>가입하기</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.buttonText}>뒤로가기</Text>
-      </TouchableOpacity>
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  imageBackground: {
+    width: '100%',
+    height: '100%',
+  },
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inputContainer: {
+    top: 280,
+    position: 'absolute',
   },
   logo: {
     fontSize: 20,
@@ -47,10 +54,14 @@ const styles = StyleSheet.create({
     width: 220,
     height: 144,
     borderRadius: 5,
-    marginTop: 50,
+    top: 100,
+    position: 'absolute',
+  },
+  buttonContainer: {
+    top: 420,
+    position: 'absolute',
   },
   idView: {
-    marginTop: 40,
     width: 220,
     flexDirection: 'row',
     alignItems: 'center',
@@ -63,6 +74,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#888',
     borderRadius: 5,
+    paddingLeft: 10,
+    backgroundColor: 'white',
   },
   idCheckButton: {
     width: 90,
@@ -70,12 +83,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   inputBox: {
-    marginTop: 20,
+    marginTop: 10,
     width: 220,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: '#888',
     borderRadius: 5,
+    paddingLeft: 10,
+    backgroundColor: 'white',
   },
   signUpButton: {
     marginTop: 60,
@@ -84,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   backButton: {
-    marginTop: 25,
+    marginTop: 15,
     width: 220,
     backgroundColor: '#F3ECA5',
     borderRadius: 5,
