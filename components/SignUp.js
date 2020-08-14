@@ -1,28 +1,107 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function SignUp(props) {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+  const [checkPassword, setCheckPassword] = useState('');
+  const [email, setEmail] = useState('');
+
+  // id 체크하는 함수 api연결 되면 중복 요청 하면됩니다.
+  const idCheckHandler = () => {
+    if (userId.length === 0) {
+      alert('아이디를 입력해주세요');
+    }
+  };
+
+  // 가입하기 버튼 함수 api연결 되면 가입하기 버튼 연결하면 됩니다.
+  const signUpHandler = () => {
+    // 이메일 유효성 검사 정규식
+    const checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+    if (
+      userId.length === 0 ||
+      password.length === 0 ||
+      checkPassword.length === 0 ||
+      email.length === 0 ||
+      password !== checkPassword
+    ) {
+      return alert('입력이 잘 못 되었습니다. 다시입력해 주세요');
+    }
+    if (userId.length <= 5) {
+      return alert('아이디를 5자 이상으로 해주세요');
+    }
+    if (password.length < 8) {
+      return alert('비밀번호를 8자 이상으로 해주세요');
+    }
+
+    if (!checkEmail.test(email)) {
+      return alert('이메일이 잘 못 되었습니다');
+    }
+    // 입력이 완료되었을 때 로그인 창으로 보내는 라우터
+    props.navigation.navigate('Login');
+    return alert('가입이 완료 되었습니다.');
+  };
+
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
         <Text style={styles.logo}>DO.SI.IN{'\n'}회원가입</Text>
         <View style={styles.inputContainer}>
           <View style={styles.idView}>
-            <TextInput style={styles.idInputBox} placeholder="아이디" />
-            <TouchableOpacity style={styles.idCheckButton}>
+            <TextInput
+              style={styles.idInputBox}
+              placeholder="아이디"
+              onChange={(e) => {
+                e.preventDefault();
+                setUserId(e.nativeEvent.text);
+              }}
+            />
+            <TouchableOpacity
+              style={styles.idCheckButton}
+              onPress={() => {
+                idCheckHandler();
+              }}
+            >
               <Text style={styles.buttonText}>중복확인</Text>
             </TouchableOpacity>
           </View>
-          <TextInput style={styles.inputBox} placeholder="비밀번호" />
-          <TextInput style={styles.inputBox} placeholder="비밀번호 재확인" />
-          <TextInput style={styles.inputBox} placeholder="Email 입력" />
+
+          <TextInput
+            style={styles.inputBox}
+            placeholder="비밀번호"
+            onChange={(e) => {
+              e.preventDefault();
+              setPassword(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="비밀번호 재확인"
+            onChange={(e) => {
+              e.preventDefault();
+              setCheckPassword(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Email 입력"
+            onChange={(e) => {
+              e.preventDefault();
+              setEmail(e.nativeEvent.text);
+            }}
+          />
+
+
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.signUpButton}
-            onPress={() => props.navigation.navigate('Login')}
+            onPress={() => {
+              signUpHandler();
+            }}
           >
             <Text style={styles.buttonText}>가입하기</Text>
           </TouchableOpacity>

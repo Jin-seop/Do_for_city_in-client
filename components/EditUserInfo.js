@@ -10,8 +10,8 @@ export default function EditUserInfo(props) {
         <Text style={styles.logo}>DO.SI.IN{'\n'}회원정보 수정</Text>
         <View style={styles.inputContainer}>
           <TextInput style={styles.inputBox} placeholder="아이디" />
-          <TextInput style={styles.inputBox} placeholder="비밀번호" />
-          <TextInput style={styles.inputBox} placeholder="비밀번호 재확인" />
+          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호" />
+          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호 재확인" />
           <TextInput style={styles.inputBox} placeholder="Email 입력" />
         </View>
 

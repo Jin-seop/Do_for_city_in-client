@@ -21,6 +21,7 @@ export default function Login(props) {
           </View>
         </View>
         <View style={styles.textInputView}>
+
           <TextInput
             placeholder="아이디"
             style={styles.textInput}
@@ -37,6 +38,9 @@ export default function Login(props) {
               setUserPassword(e.nativeEvent.text);
             }}
           />
+
+          
+
         </View>
         <View style={styles.loginContainer}>
           <TouchableOpacity
