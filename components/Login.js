@@ -15,7 +15,7 @@ export default function Login(props) {
         </View>
         <View style={styles.textInputView}>
           <TextInput placeholder="아이디" style={styles.textInput} />
-          <TextInput placeholder="비밀번호" style={styles.textInput} />
+          <TextInput placeholder="비밀번호" secureTextEntry style={styles.textInput} />
         </View>
         <View style={styles.loginContainer}>
           <TouchableOpacity

@@ -68,6 +68,7 @@ export default function SignUp(props) {
               <Text style={styles.buttonText}>중복확인</Text>
             </TouchableOpacity>
           </View>
+
           <TextInput
             style={styles.inputBox}
             placeholder="비밀번호"
@@ -92,6 +93,8 @@ export default function SignUp(props) {
               setEmail(e.nativeEvent.text);
             }}
           />
+
+
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
