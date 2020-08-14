@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import cityWhite from '../assets/city_white.jpg';
 
 export default function Login(props) {
+  const [userId, setUserId] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+
+  const userInfoHandler = () => {
+    console.log(userId, userPassword);
+  };
+
   return (
     <ImageBackground style={styles.imageBackground} source={cityWhite} resizeMode="cover">
       <View style={styles.align}>
@@ -14,13 +21,30 @@ export default function Login(props) {
           </View>
         </View>
         <View style={styles.textInputView}>
-          <TextInput placeholder="아이디" style={styles.textInput} />
-          <TextInput placeholder="비밀번호" style={styles.textInput} />
+          <TextInput
+            placeholder="아이디"
+            style={styles.textInput}
+            onChange={(e) => {
+              e.preventDefault();
+              setUserId(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            placeholder="비밀번호"
+            style={styles.textInput}
+            onChange={(e) => {
+              e.preventDefault();
+              setUserPassword(e.nativeEvent.text);
+            }}
+          />
         </View>
         <View style={styles.loginContainer}>
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => props.navigation.navigate('MainPage')}
+            onPress={() => {
+              props.navigation.navigate('MainPage');
+              userInfoHandler();
+            }}
           >
             <Text>로그인 </Text>
           </TouchableOpacity>
