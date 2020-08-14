@@ -15,8 +15,8 @@ export default function SignUp(props) {
               <Text style={styles.buttonText}>중복확인</Text>
             </TouchableOpacity>
           </View>
-          <TextInput style={styles.inputBox} placeholder="비밀번호" />
-          <TextInput style={styles.inputBox} placeholder="비밀번호 재확인" />
+          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호" />
+          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호 재확인" />
           <TextInput style={styles.inputBox} placeholder="Email 입력" />
         </View>
         <View style={styles.buttonContainer}>
