@@ -30,7 +30,7 @@ export default function SignUp(props) {
     ) {
       return alert('입력이 잘 못 되었습니다. 다시입력해 주세요');
     }
-    if (userId.length <= 5) {
+    if (userId.length < 4) {
       return alert('아이디를 5자 이상으로 해주세요');
     }
     if (password.length < 8) {
@@ -72,6 +72,7 @@ export default function SignUp(props) {
           <TextInput
             style={styles.inputBox}
             placeholder="비밀번호"
+            secureTextEntry
             onChange={(e) => {
               e.preventDefault();
               setPassword(e.nativeEvent.text);
@@ -80,6 +81,7 @@ export default function SignUp(props) {
           <TextInput
             style={styles.inputBox}
             placeholder="비밀번호 재확인"
+            secureTextEntry
             onChange={(e) => {
               e.preventDefault();
               setCheckPassword(e.nativeEvent.text);
@@ -93,8 +95,6 @@ export default function SignUp(props) {
               setEmail(e.nativeEvent.text);
             }}
           />
-
-
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
