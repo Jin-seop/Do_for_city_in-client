@@ -1,30 +1,75 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function EditUserInfo(props) {
+  const [userId, setUserId] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [userPasswordCheck, setUserPasswordCheck] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+
+  const editUserInfoHandler = () => {
+    console.log('a');
+    // console.log(userId, userPassword, userPasswordCheck, userEmail);
+    // To do : put요청을 통해 회원정보를 수정하는 로직을 추가해야 합니다.
+  };
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
         <Text style={styles.logo}>DO.SI.IN{'\n'}회원정보 수정</Text>
         <View style={styles.inputContainer}>
-          <TextInput style={styles.inputBox} placeholder="아이디" />
-          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호" />
-          <TextInput style={styles.inputBox} secureTextEntry placeholder="비밀번호 재확인" />
-          <TextInput style={styles.inputBox} placeholder="Email 입력" />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="아이디"
+            onChange={(e) => {
+              e.preventDefault();
+              setUserId(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            style={styles.inputBox}
+            secureTextEntry
+            placeholder="비밀번호"
+            onChange={(e) => {
+              e.preventDefault();
+              setUserPassword(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            style={styles.inputBox}
+            secureTextEntry
+            placeholder="비밀번호 재확인"
+            onChange={(e) => {
+              e.preventDefault();
+              setUserPasswordCheck(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            style={styles.inputBox}
+            placeholder="Email 입력"
+            onChange={(e) => {
+              e.preventDefault();
+              setUserEmail(e.nativeEvent.text);
+            }}
+          />
         </View>
 
         <View style={styles.buttonView}>
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => props.navigation.navigate('Mypage')}
+            onPress={() => {
+              props.navigation.navigate('Mypage');
+              editUserInfoHandler();
+            }}
           >
             <Text>수정하기</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => props.navigation.navigate('Mypage')}
+            onPress={() => {
+              props.navigation.navigate('Mypage');
+            }}
           >
             <Text>뒤로가기</Text>
           </TouchableOpacity>
