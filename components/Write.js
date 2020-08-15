@@ -1,16 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function Write(props) {
+  const [contentTitle, setContentTitle] = useState('');
+  const [contentBody, setContentBody] = useState('');
+
+  const postContentHandler = () => {
+    // contentTitle과 contentBody를 이용해 서버로 post요청을 보냅니다.
+    console.log(contentTitle, contentBody);
+  };
+
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
         <Text style={styles.logo}>DO.SI.IN{'\n'}내 도시락 올리기</Text>
         <View style={styles.inputContainer}>
-          <TextInput placeholder="제목" style={styles.titleInput} />
-          <TextInput placeholder="본문" style={styles.bodyInput} />
+          <TextInput
+            placeholder="제목"
+            style={styles.titleInput}
+            onChange={(e) => {
+              e.preventDefault();
+              setContentTitle(e.nativeEvent.text);
+            }}
+          />
+          <TextInput
+            placeholder="본문"
+            style={styles.bodyInput}
+            onChange={(e) => {
+              e.preventDefault();
+              setContentBody(e.nativeEvent.text);
+            }}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.buttons}>
@@ -18,7 +40,10 @@ export default function Write(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
-            onPress={() => props.navigation.navigate('PostPage')}
+            onPress={() => {
+              props.navigation.navigate('PostPage');
+              postContentHandler();
+            }}
           >
             <Text style={styles.buttonText}>글올리기</Text>
           </TouchableOpacity>
