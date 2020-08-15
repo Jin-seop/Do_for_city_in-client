@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignUp/> 스냅샷 테스트 1`] = `
+<View
+  accessibilityIgnoresInvertColors={true}
+  style={
+    Object {
+      "height": "100%",
+      "width": "100%",
+    }
+  }
+>
+  <Image
+    resizeMode="cover"
+    source={1}
+    style={
+      Array [
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "height": "100%",
+          "width": "100%",
+        },
+        undefined,
+      ]
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "backgroundColor": "#F3ECA5",
+          "borderRadius": 5,
+          "fontSize": 20,
+          "height": 144,
+          "position": "absolute",
+          "textAlign": "center",
+          "textAlignVertical": "center",
+          "top": 100,
+          "width": 220,
+        }
+      }
+    >
+      DO.SI.IN
+      
+
+      회원가입
+    </Text>
+    <View
+      style={
+        Object {
+          "position": "absolute",
+          "top": 280,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+            "width": 220,
+          }
+        }
+      >
+        <TextInput
+          allowFontScaling={true}
+          placeholder="아이디"
+          rejectResponderTermination={true}
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderColor": "#888",
+              "borderRadius": 5,
+              "borderStyle": "solid",
+              "borderWidth": 1,
+              "height": 30,
+              "paddingLeft": 10,
+              "width": 110,
+            }
+          }
+          underlineColorAndroid="transparent"
+        />
+        <RNGestureHandlerButton
+          collapsable={false}
+          onGestureEvent={[Function]}
+          onGestureHandlerEvent={[Function]}
+          onGestureHandlerStateChange={[Function]}
+          onHandlerStateChange={[Function]}
+          rippleColor={0}
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              undefined,
+            ]
+          }
+        >
+          <View
+            accessible={true}
+            style={
+              Object {
+                "backgroundColor": "#F3ECA5",
+                "borderRadius": 5,
+                "opacity": 1,
+                "width": 90,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "height": 30,
+                  "textAlign": "center",
+                  "textAlignVertical": "center",
+                }
+              }
+            >
+              중복확인
+            </Text>
+          </View>
+        </RNGestureHandlerButton>
+      </View>
+      <TextInput
+        allowFontScaling={true}
+        placeholder="비밀번호"
+        rejectResponderTermination={true}
+        secureTextEntry={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#888",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "marginTop": 10,
+            "paddingLeft": 10,
+            "width": 220,
+          }
+        }
+        underlineColorAndroid="transparent"
+      />
+      <TextInput
+        allowFontScaling={true}
+        placeholder="비밀번호 재확인"
+        rejectResponderTermination={true}
+        secureTextEntry={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#888",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "marginTop": 10,
+            "paddingLeft": 10,
+            "width": 220,
+          }
+        }
+        underlineColorAndroid="transparent"
+      />
+      <TextInput
+        allowFontScaling={true}
+        placeholder="Email 입력"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "backgroundColor": "white",
+            "borderColor": "#888",
+            "borderRadius": 5,
+            "borderStyle": "solid",
+            "borderWidth": 1,
+            "marginTop": 10,
+            "paddingLeft": 10,
+            "width": 220,
+          }
+        }
+        underlineColorAndroid="transparent"
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "position": "absolute",
+          "top": 420,
+        }
+      }
+    >
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          style={
+            Object {
+              "backgroundColor": "#F3ECA5",
+              "borderRadius": 5,
+              "marginTop": 60,
+              "opacity": 1,
+              "width": 220,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "height": 30,
+                "textAlign": "center",
+                "textAlignVertical": "center",
+              }
+            }
+          >
+            가입하기
+          </Text>
+        </View>
+      </RNGestureHandlerButton>
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          style={
+            Object {
+              "backgroundColor": "#F3ECA5",
+              "borderRadius": 5,
+              "marginTop": 15,
+              "opacity": 1,
+              "width": 220,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "height": 30,
+                "textAlign": "center",
+                "textAlignVertical": "center",
+              }
+            }
+          >
+            뒤로가기
+          </Text>
+        </View>
+      </RNGestureHandlerButton>
+    </View>
+  </View>
+</View>
+`;

@@ -29,6 +29,7 @@ export default function EditUserInfo(props) {
           />
           <TextInput
             style={styles.inputBox}
+            secureTextEntry
             placeholder="비밀번호"
             onChange={(e) => {
               e.preventDefault();
@@ -37,6 +38,7 @@ export default function EditUserInfo(props) {
           />
           <TextInput
             style={styles.inputBox}
+            secureTextEntry
             placeholder="비밀번호 재확인"
             onChange={(e) => {
               e.preventDefault();

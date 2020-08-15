@@ -1,9 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function MainPage(props) {
+  const [serchPost, setSerchPost] = useState('');
+
+  const postHandler = () => {
+    // 게시글 클릭시 get요청 후 페이지 라우팅과 해당 받아온 데이터를 props로 보내야 합니다.
+    props.navigation.navigate('PostPage');
+  };
+
+  // 서버요청을 받아서 게시글 목록을 뿌려주는 함수
+  const postListHandler = () => {
+    // serchPost 값을 이용해서 서버에서 받아오기
+  };
+  // 최신 게시글을 받아오는 함수
+  const currentPostListHandler = () => {
+    // 그냥 get요청으로 최신 게시글 받아오기
+  };
+
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
@@ -23,13 +39,24 @@ export default function MainPage(props) {
           >
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
-          <TextInput placeholder="검색" style={styles.serchBar} />
+          <TextInput
+            placeholder="검색"
+            style={styles.serchBar}
+            onChange={(e) => {
+              e.preventDefault();
+              setSerchPost(e.nativeEvent.text);
+            }}
+          />
         </View>
         <View style={styles.mainScrollContainer}>
+          {/* 이부분에서 게시글 검색이 없으면 최신으로 보여주고 아니면 게시글 검색으로 보여주기(serchPost 이용해서) */}
+          {/* serchPost ? postListHandler() : currentPostListHandler() */}
           <ScrollView>
             <TouchableOpacity
               style={styles.contantContainer}
-              onPress={() => props.navigation.navigate('PostPage')}
+              onPress={() => {
+                postHandler();
+              }}
             >
               <View style={styles.contantTextContainer}>
                 <Text>게시글</Text>

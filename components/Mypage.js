@@ -4,6 +4,10 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function mypage(props) {
+  // 게시물 뿌려줄 때 해당 함수를 클릭하면 서버에 요청해서 해당 게시물로 가도록 만들면 됩니다.
+  const myPostHandler = () => {};
+  const myCommetHandler = () => {};
+
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.body}>
@@ -31,7 +35,12 @@ export default function mypage(props) {
         <View style={styles.contantsListContainer}>
           <Text style={styles.contantsListText}>내가 쓴 글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
-            <TouchableOpacity style={{ margin: 10 }}>
+            <TouchableOpacity
+              style={{ margin: 10 }}
+              onPress={() => {
+                myPostHandler();
+              }}
+            >
               <Text>-게시글</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ margin: 10 }}>
@@ -46,9 +55,14 @@ export default function mypage(props) {
           </ScrollView>
         </View>
         <View style={styles.comentsListContainer}>
-          <Text style={styles.contantsListText}>내가 쓴 글</Text>
+          <Text style={styles.contantsListText}>내가 쓴 댓 글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
-            <TouchableOpacity style={{ margin: 10 }}>
+            <TouchableOpacity
+              style={{ margin: 10 }}
+              onPress={() => {
+                myCommetHandler();
+              }}
+            >
               <Text>-댓글</Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ margin: 10 }}>
