@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import axios from 'axios';
 import cityWhite from '../assets/city_white.jpg';
 
 export default function Login(props) {
@@ -8,7 +9,28 @@ export default function Login(props) {
   const [userPassword, setUserPassword] = useState('');
 
   const userInfoHandler = () => {
-    console.log(userId, userPassword);
+    axios
+      .post(
+        'http://13.125.205.76:5000/signin',
+        {
+          userId,
+          password: userPassword,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then(function (res) {
+        if (res.status === 201) {
+          props.navigation.navigate('MainPage');
+        }
+      })
+      .catch(function (err) {
+        alert('유저 정보가 잘못됬습니다');
+      });
   };
 
   return (
@@ -43,7 +65,6 @@ export default function Login(props) {
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => {
-              props.navigation.navigate('MainPage');
               userInfoHandler();
             }}
           >
