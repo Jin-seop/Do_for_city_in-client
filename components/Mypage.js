@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import Axios from 'axios';
+import MyComment from './MypageComment';
+import MyPost from './MypagePost';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function mypage(props) {
   // 게시물 뿌려줄 때 해당 함수를 클릭하면 서버에 요청해서 해당 게시물로 가도록 만들면 됩니다.
-  const myPostHandler = () => {};
-  const myCommetHandler = () => {};
+  const [post, setPost] = useState();
+  const [comment, setComment] = useState();
+  const [user, setUser] = useState();
+
+  const postCommnetGetHandler = () => {
+    Axios.get('http://13.125.205.76:5000/mypage')
+      .then((list) => list.data[0])
+      .then((data) => {
+        if (data.contants) {
+          setPost(data.contants);
+        }
+        if (data.comments) {
+          setComment(data.comments);
+        }
+        setUser(data.userId);
+      });
+  };
+
+  const myPostListHandler = () => {
+    return post.map((userPost, index) => {
+      return <MyPost key={index} userId={user} userpost={userPost} />;
+    });
+  };
+  const myCommetListHandler = () => {
+    return comment.map((userComment, index) => {
+      return <MyComment key={index} userId={user} userComment={userComment} />;
+    });
+  };
+
+  useEffect(() => postCommnetGetHandler(), []);
 
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
@@ -29,51 +60,19 @@ export default function mypage(props) {
           </TouchableOpacity>
         </View>
         <View style={styles.userNameBox}>
-          <Text style={styles.userName}>유저명</Text>
+          <Text style={styles.userName}>{user}</Text>
           <Text style={styles.mypageText}>마이페이지</Text>
         </View>
         <View style={styles.contantsListContainer}>
           <Text style={styles.contantsListText}>내가 쓴 글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
-            <TouchableOpacity
-              style={{ margin: 10 }}
-              onPress={() => {
-                myPostHandler();
-              }}
-            >
-              <Text>-게시글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-게시글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-게시글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-게시글</Text>
-            </TouchableOpacity>
+            {post ? myPostListHandler() : <Text>게시글이 없습니다.</Text>}
           </ScrollView>
         </View>
         <View style={styles.comentsListContainer}>
-          <Text style={styles.contantsListText}>내가 쓴 댓 글</Text>
+          <Text style={styles.contantsListText}>내가 쓴 댓글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
-            <TouchableOpacity
-              style={{ margin: 10 }}
-              onPress={() => {
-                myCommetHandler();
-              }}
-            >
-              <Text>-댓글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-댓글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-댓글</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 10 }}>
-              <Text>-댓글</Text>
-            </TouchableOpacity>
+            {post ? myCommetListHandler() : <Text>댓글이 없습니다.</Text>}
           </ScrollView>
         </View>
         <View style={styles.reviseButton}>
