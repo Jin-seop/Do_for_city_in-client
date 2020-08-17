@@ -15,6 +15,16 @@ export default function SignUp(props) {
     if (userId.length === 0) {
       alert('아이디를 입력해주세요');
     }
+    axios
+      .post('http://13.125.205.76:5000/signup/checkid', { userId })
+      .then((res) => {
+        if (res.status === 200) {
+          alert('생성 가능한 아이디입니다.');
+        }
+      })
+      .catch((err) => {
+        alert('중복 된 아이디입니다.');
+      });
   };
 
   // 가입하기 버튼 함수 api연결 되면 가입하기 버튼 연결하면 됩니다.
