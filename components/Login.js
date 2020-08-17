@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, Text, View, StyleSheet, ImageBackground, Alert } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet, ImageBackground } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import axios from 'axios';
 import cityWhite from '../assets/city_white.jpg';
@@ -25,13 +25,11 @@ export default function Login(props) {
       )
       .then(function (res) {
         if (res.status === 201) {
-          console.log(res);
           props.navigation.navigate('MainPage');
         }
       })
       .catch(function (err) {
         alert('유저 정보가 잘못됬습니다');
-        console.log(err);
       });
   };
 
@@ -67,7 +65,6 @@ export default function Login(props) {
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => {
-              // props.navigation.navigate('MainPage');
               userInfoHandler();
             }}
           >
