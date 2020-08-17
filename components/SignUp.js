@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function SignUp(props) {
@@ -20,7 +21,6 @@ export default function SignUp(props) {
   const signUpHandler = () => {
     // 이메일 유효성 검사 정규식
     const checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
     if (
       userId.length === 0 ||
       password.length === 0 ||
@@ -40,9 +40,31 @@ export default function SignUp(props) {
     if (!checkEmail.test(email)) {
       return alert('이메일이 잘 못 되었습니다');
     }
-    // 입력이 완료되었을 때 로그인 창으로 보내는 라우터
-    props.navigation.navigate('Login');
-    return alert('가입이 완료 되었습니다.');
+
+    axios
+      .post(
+        // 로컬테스트 이후에 ec2 주소로 변경할것
+        'http://13.125.205.76:5000/signup',
+        {
+          userId,
+          password,
+          email,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((res) => {
+        // 입력이 완료되었을 때 로그인 창으로 보내는 라우터
+        if (res.status === 201) {
+          props.navigation.navigate('Login');
+          return alert('가입이 완료 되었습니다.');
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
