@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -23,7 +23,7 @@ export default function MainPage(props) {
           setPostList(dataList);
         })
         .catch((err) => console.log(err));
-    } else {
+    } else if (serchPost === '') {
       return postList.map((post, index) => {
         return <PostList data={post} key={index} navigation={props.navigation} />;
       });
