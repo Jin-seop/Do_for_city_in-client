@@ -15,18 +15,27 @@ export default function SignUp(props) {
     if (userId.length === 0) {
       alert('아이디를 입력해주세요');
     }
-    axios.post(
-      'http://13.125.205.76:5000/signup/checkid',
-      {
-        userId,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
+    axios
+      .post(
+        'http://13.125.205.76:5000/signup/checkid',
+        {
+          userId,
         },
-      }
-    );
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          return alert('사용가능한 아이디입니다');
+        }
+      })
+      .catch((err) => {
+        alert('이미 존재하는 유저아이디 입니다.');
+      });
   };
 
   // 가입하기 버튼 함수
