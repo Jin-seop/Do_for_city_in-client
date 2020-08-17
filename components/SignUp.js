@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
-import postList from './PostList';
 
 export default function SignUp(props) {
   const [userId, setUserId] = useState('');
@@ -44,7 +43,6 @@ export default function SignUp(props) {
 
     axios
       .post(
-        // 로컬테스트 이후에 ec2 주소로 변경할것
         'http://13.125.205.76:5000/signup',
         {
           userId,

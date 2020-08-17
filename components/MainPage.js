@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -13,15 +13,17 @@ export default function MainPage(props) {
   const serchPostListHandler = () => {
     // serchPost 값을 이용해서 서버에서 받아오기
   };
+
   // 최신 게시글을 받아오는 함수
   const currentPostListHandler = () => {
-    Axios.get('http://13.125.205.76:5000/contents')
-      .then((data) => data.data)
-      .then((dataList) => {
-        setPostList(dataList);
-      })
-      .catch((err) => console.log(err));
-    if (postList) {
+    if (!postList) {
+      Axios.get('http://13.125.205.76:5000/contents')
+        .then((data) => data.data)
+        .then((dataList) => {
+          setPostList(dataList);
+        })
+        .catch((err) => console.log(err));
+    } else {
       return postList.map((post, index) => {
         return <PostList data={post} key={index} navigation={props.navigation} />;
       });
@@ -59,7 +61,9 @@ export default function MainPage(props) {
         <View style={styles.mainScrollContainer}>
           {/* 이부분에서 게시글 검색이 없으면 최신으로 보여주고 아니면 게시글 검색으로 보여주기(serchPost 이용해서) */}
           {/* serchPost ? postListHandler() : currentPostListHandler() */}
-          <ScrollView>{currentPostListHandler()}</ScrollView>
+          <ScrollView>
+            {serchPost === '' ? currentPostListHandler() : serchPostListHandler()}
+          </ScrollView>
           <View style={styles.writterButton}>
             <TouchableOpacity onPress={() => props.navigation.navigate('WritePage')}>
               <Text>작성</Text>

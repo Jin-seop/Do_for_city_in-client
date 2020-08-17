@@ -24,7 +24,7 @@ export default function Login(props) {
         }
       )
       .then(function (res) {
-        if (res.status === 201) {
+        if (res.status === 200) {
           props.navigation.navigate('MainPage');
         }
       })
