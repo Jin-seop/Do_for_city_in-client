@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
+import postList from './PostList';
 
 export default function SignUp(props) {
   const [userId, setUserId] = useState('');

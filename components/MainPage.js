@@ -1,23 +1,31 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
+import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
+import PostList from './PostList';
 
 export default function MainPage(props) {
   const [serchPost, setSerchPost] = useState('');
-
-  const postHandler = () => {
-    // 게시글 클릭시 get요청 후 페이지 라우팅과 해당 받아온 데이터를 props로 보내야 합니다.
-    props.navigation.navigate('PostPage');
-  };
+  const [postList, setPostList] = useState();
 
   // 서버요청을 받아서 게시글 목록을 뿌려주는 함수
-  const postListHandler = () => {
+  const serchPostListHandler = () => {
     // serchPost 값을 이용해서 서버에서 받아오기
   };
   // 최신 게시글을 받아오는 함수
   const currentPostListHandler = () => {
-    // 그냥 get요청으로 최신 게시글 받아오기
+    Axios.get('http://13.125.205.76:5000/contents')
+      .then((data) => data.data)
+      .then((dataList) => {
+        setPostList(dataList);
+      })
+      .catch((err) => console.log(err));
+    if (postList) {
+      return postList.map((post, index) => {
+        return <PostList data={post} key={index} navigation={props.navigation} />;
+      });
+    }
   };
 
   return (
@@ -51,58 +59,7 @@ export default function MainPage(props) {
         <View style={styles.mainScrollContainer}>
           {/* 이부분에서 게시글 검색이 없으면 최신으로 보여주고 아니면 게시글 검색으로 보여주기(serchPost 이용해서) */}
           {/* serchPost ? postListHandler() : currentPostListHandler() */}
-          <ScrollView>
-            <TouchableOpacity
-              style={styles.contantContainer}
-              onPress={() => {
-                postHandler();
-              }}
-            >
-              <View style={styles.contantTextContainer}>
-                <Text>게시글</Text>
-              </View>
-              <View style={styles.contantWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.contantContainer}>
-              <View style={styles.contantTextContainer}>
-                <Text>게시글</Text>
-              </View>
-              <View style={styles.contantWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.contantContainer}>
-              <View style={styles.contantTextContainer}>
-                <Text>게시글</Text>
-              </View>
-              <View style={styles.contantWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.contantContainer}>
-              <View style={styles.contantTextContainer}>
-                <Text>게시글</Text>
-              </View>
-              <View style={styles.contantWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.contantContainer}>
-              <View style={styles.contantTextContainer}>
-                <Text>게시글</Text>
-              </View>
-              <View style={styles.contantWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-            </TouchableOpacity>
-          </ScrollView>
+          <ScrollView>{currentPostListHandler()}</ScrollView>
           <View style={styles.writterButton}>
             <TouchableOpacity onPress={() => props.navigation.navigate('WritePage')}>
               <Text>작성</Text>
@@ -162,20 +119,7 @@ const styles = StyleSheet.create({
     width: 220,
     height: 500,
   },
-  contantContainer: {
-    width: 220,
-    height: 150,
-    backgroundColor: '#F3ECA5',
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  contantTextContainer: {
-    width: '100%',
-    height: '50%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  contantWritter: { marginLeft: 20 },
+
   writterButton: {
     position: 'absolute',
     width: 50,
