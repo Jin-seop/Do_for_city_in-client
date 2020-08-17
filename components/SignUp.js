@@ -10,14 +10,35 @@ export default function SignUp(props) {
   const [checkPassword, setCheckPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  // id 체크하는 함수 api연결 되면 중복 요청 하면됩니다.
+  // id 체크하는 함수
   const idCheckHandler = () => {
     if (userId.length === 0) {
       alert('아이디를 입력해주세요');
     }
+    axios
+      .post(
+        'http://13.125.205.76:5000/signup/checkid',
+        {
+          userId,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          return alert('사용가능한 아이디입니다');
+        }
+      })
+      .catch((err) => {
+        alert('이미 존재하는 유저아이디 입니다.');
+      });
   };
 
-  // 가입하기 버튼 함수 api연결 되면 가입하기 버튼 연결하면 됩니다.
+  // 가입하기 버튼 함수
   const signUpHandler = () => {
     // 이메일 유효성 검사 정규식
     const checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
