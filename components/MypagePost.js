@@ -2,8 +2,10 @@ import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default MyPost = ({ userId, userpost }) => {
-  const myPostHandler = () => {};
+export default MyPost = ({ userId, userpost, navigation }) => {
+  const myPostHandler = () => {
+    navigation.navigate('PostPage', { userId, userpost });
+  };
   return (
     <TouchableOpacity
       style={{ margin: 10 }}

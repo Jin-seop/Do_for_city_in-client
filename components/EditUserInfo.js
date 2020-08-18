@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputContainer: {
-    top: 280,
-    position: 'absolute',
+    position: 'relative',
+    top: -40,
   },
   logo: {
     fontSize: 20,
@@ -101,14 +101,13 @@ const styles = StyleSheet.create({
     width: 220,
     height: 144,
     borderRadius: 5,
-    top: 100,
-    position: 'absolute',
+    top: -80,
+    position: 'relative',
   },
   buttonView: {
-    position: 'absolute',
+    position: 'relative',
     width: 220,
     height: 35,
-    top: 450,
   },
   inputBox: {
     marginTop: 10,

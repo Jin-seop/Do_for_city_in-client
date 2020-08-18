@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 
@@ -16,7 +16,6 @@ export default function SignUp(props) {
       alert('아이디를 입력해주세요');
     }
     axios
-
       .post(
         'http://13.125.205.76:5000/signup/checkid',
         {
@@ -36,7 +35,6 @@ export default function SignUp(props) {
       })
       .catch((err) => {
         alert('이미 존재하는 유저아이디 입니다.');
-
       });
   };
 
@@ -172,8 +170,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputContainer: {
-    top: 280,
-    position: 'absolute',
+    position: 'relative',
+    top: -50,
   },
   logo: {
     fontSize: 20,
@@ -183,12 +181,12 @@ const styles = StyleSheet.create({
     width: 220,
     height: 144,
     borderRadius: 5,
-    top: 100,
-    position: 'absolute',
+    top: -80,
+    position: 'relative',
   },
   buttonContainer: {
-    top: 420,
-    position: 'absolute',
+    position: 'relative',
+    marginTop: -60,
   },
   idView: {
     width: 220,

@@ -18,7 +18,9 @@ export default function MainPage(props) {
   const currentPostListHandler = () => {
     if (!postList) {
       Axios.get('http://13.125.205.76:5000/contents')
-        .then((data) => data.data)
+        .then((data) => {
+          return data.data;
+        })
         .then((dataList) => {
           setPostList(dataList);
         })
@@ -33,6 +35,7 @@ export default function MainPage(props) {
       });
     }
   };
+  
   const setPostListHandler = () => {
     Axios.get('http://13.125.205.76:5000/contents')
       .then((data) => data.data)
@@ -41,6 +44,13 @@ export default function MainPage(props) {
       })
       .catch((err) => console.log(err));
   };
+  
+  const logoutHandler = () => {
+    Axios.post('http://13.125.205.76:5000/signout')
+      .then((res) => props.navigation.navigate('Login'))
+      .catch((err) => console.log(err));
+  };
+  
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
@@ -54,10 +64,7 @@ export default function MainPage(props) {
           >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => props.navigation.navigate('Login')}
-          >
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
           <TextInput
@@ -75,8 +82,6 @@ export default function MainPage(props) {
           </TouchableOpacity>
         </View>
         <View style={styles.mainScrollContainer}>
-          {/* 이부분에서 게시글 검색이 없으면 최신으로 보여주고 아니면 게시글 검색으로 보여주기(serchPost 이용해서) */}
-          {/* serchPost ? postListHandler() : currentPostListHandler() */}
           <ScrollView>
             {serchPost === '' ? currentPostListHandler() : serchPostListHandler()}
           </ScrollView>
