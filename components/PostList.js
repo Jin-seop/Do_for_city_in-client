@@ -19,7 +19,7 @@ export default postList = ({ data, navigation }) => {
         <Text>{data.title}</Text>
       </View>
       <View style={styles.contantWritter}>
-        <Text>작성자</Text>
+        <Text>작성자 : {data.contents === null ? '' : data.contents.userId}</Text>
         <Text>{data.createdAt}</Text>
       </View>
     </TouchableOpacity>
