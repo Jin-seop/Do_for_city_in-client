@@ -1,9 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
 import { TouchableOpacity, ScrollView, TextInput } from 'react-native-gesture-handler';
+import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function PostPage(props) {
+  const logoutHandler = () => {
+    Axios.post('http://13.125.205.76:5000/signout')
+      .then((res) => props.navigation.navigate('Login'))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <KeyboardAvoidingView behavior="height" enabled>
       <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
@@ -23,10 +30,7 @@ export default function PostPage(props) {
           >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => props.navigation.navigate('Login')}
-          >
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler()}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
