@@ -28,12 +28,20 @@ export default function mypage(props) {
 
   const myPostListHandler = () => {
     return post.map((userPost, index) => {
-      return <MyPost key={index} userId={user} userpost={userPost} />;
+      return <MyPost key={index} userId={user} userpost={userPost} navigation={props.navigation} />;
     });
   };
+
   const myCommetListHandler = () => {
     return comment.map((userComment, index) => {
-      return <MyComment key={index} userId={user} userComment={userComment} />;
+      return (
+        <MyComment
+          key={index}
+          userId={user}
+          userComment={userComment}
+          navigation={props.navigation}
+        />
+      );
     });
   };
 

@@ -16,7 +16,6 @@ export default function SignUp(props) {
       alert('아이디를 입력해주세요');
     }
     axios
-
       .post(
         'http://13.125.205.76:5000/signup/checkid',
         {
@@ -36,7 +35,6 @@ export default function SignUp(props) {
       })
       .catch((err) => {
         alert('이미 존재하는 유저아이디 입니다.');
-
       });
   };
 
