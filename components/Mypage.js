@@ -37,6 +37,11 @@ export default function mypage(props) {
     });
   };
 
+  const logoutHandler = () => {
+    Axios.post('http://13.125.205.76:5000/signout')
+      .then((res) => props.navigation.navigate('Login'))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => postCommnetGetHandler(), []);
 
   return (
@@ -52,10 +57,7 @@ export default function mypage(props) {
           >
             <Text style={styles.menuText}>메인페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => props.navigation.navigate('Login')}
-          >
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler()}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
