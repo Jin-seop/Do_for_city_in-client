@@ -50,8 +50,6 @@ export default function MainPage(props) {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => serchPostListHandler, []);
-
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>

@@ -13,7 +13,7 @@ export default MyPost = ({ userId, userpost, navigation }) => {
         myPostHandler();
       }}
     >
-      <Text>{userpost}</Text>
+      <Text>-{userpost}</Text>
     </TouchableOpacity>
   );
 };

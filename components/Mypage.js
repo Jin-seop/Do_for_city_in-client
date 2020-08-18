@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { StyleSheet, Text, View, ImageBackground, Alert } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -14,35 +14,51 @@ export default function mypage(props) {
 
   const postCommnetGetHandler = () => {
     Axios.get('http://13.125.205.76:5000/mypage')
-      .then((list) => list.data[0])
+      .then((list) => {
+        return list.data;
+      })
       .then((data) => {
-        if (data.contants) {
-          setPost(data.contants);
+        if (data[0].contents) {
+          setPost(data[0].contents);
         }
-        if (data.comments) {
-          setComment(data.comments);
+        if (data[0].comments) {
+          setComment(data[0].comments);
         }
-        setUser(data.userId);
-      });
+        setUser(data[0].userId);
+      })
+      .catch((err) => console.log(err));
   };
 
   const myPostListHandler = () => {
-    return post.map((userPost, index) => {
-      return <MyPost key={index} userId={user} userpost={userPost} navigation={props.navigation} />;
+    const result = [];
+    for (let i = post.length - 1; i >= 0; i--) {
+      result.push(post[i]);
+    }
+
+    return result.map((post, index) => {
+      return (
+        <MyPost userId={user} key={index} userpost={post.title} navigation={props.navigation} />
+      );
     });
   };
 
   const myCommetListHandler = () => {
-    return comment.map((userComment, index) => {
-      return (
-        <MyComment
-          key={index}
-          userId={user}
-          userComment={userComment}
-          navigation={props.navigation}
-        />
-      );
-    });
+    const result = [];
+    for (let i = comment.length - 1; i >= 0; i--) {
+      result.push(comment[i]);
+    }
+    // 이부분 콘솔로그로 확인 후 댓글 표시해주기
+    result.map((post) => console.log(post));
+    // return comment.map((userComment, index) => {
+    //   return (
+    //     <MyComment
+    //       key={index}
+    //       userId={user}
+    //       userComment={userComment}
+    //       navigation={props.navigation}
+    //     />
+    //   );
+    // });
   };
 
   const logoutHandler = () => {
@@ -95,7 +111,7 @@ export default function mypage(props) {
         <View style={styles.comentsListContainer}>
           <Text style={styles.contantsListText}>내가 쓴 댓글</Text>
           <ScrollView style={{ width: 180, height: 150 }}>
-            {post ? myCommetListHandler() : <Text>댓글이 없습니다.</Text>}
+            {comment ? myCommetListHandler() : <Text>댓글이 없습니다.</Text>}
           </ScrollView>
         </View>
         <View style={styles.reviseButton}>
