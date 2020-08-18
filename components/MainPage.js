@@ -51,7 +51,7 @@ export default function MainPage(props) {
           >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler()}>
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
           <TextInput

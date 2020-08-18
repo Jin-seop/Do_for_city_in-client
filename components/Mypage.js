@@ -65,7 +65,7 @@ export default function mypage(props) {
           >
             <Text style={styles.menuText}>메인페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler()}>
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
         </View>
