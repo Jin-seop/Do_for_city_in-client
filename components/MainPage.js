@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -9,9 +9,8 @@ export default function MainPage(props) {
   const [serchPost, setSerchPost] = useState('');
   const [postList, setPostList] = useState();
 
-  // 서버요청을 받아서 게시글 목록을 뿌려주는 함수
   const serchPostListHandler = () => {
-    // serchPost 값을 이용해서 서버에서 받아오기
+    console.log(serchPost);
   };
 
   // 최신 게시글을 받아오는 함수
@@ -35,7 +34,7 @@ export default function MainPage(props) {
       });
     }
   };
-  
+
   const setPostListHandler = () => {
     Axios.get('http://13.125.205.76:5000/contents')
       .then((data) => data.data)
@@ -44,13 +43,15 @@ export default function MainPage(props) {
       })
       .catch((err) => console.log(err));
   };
-  
+
   const logoutHandler = () => {
     Axios.post('http://13.125.205.76:5000/signout')
       .then((res) => props.navigation.navigate('Login'))
       .catch((err) => console.log(err));
   };
-  
+
+  useEffect(() => serchPostListHandler, []);
+
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
