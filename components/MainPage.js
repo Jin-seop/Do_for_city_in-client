@@ -26,18 +26,31 @@ export default function MainPage(props) {
         })
         .catch((err) => console.log(err));
     } else if (serchPost === '') {
-      return postList.map((post, index) => {
+      const result = [];
+      for (let i = postList.length - 1; i >= 0; i--) {
+        result.push(postList[i]);
+      }
+      return result.map((post, index) => {
         return <PostList data={post} key={index} navigation={props.navigation} />;
       });
     }
   };
-
+  
+  const setPostListHandler = () => {
+    Axios.get('http://13.125.205.76:5000/contents')
+      .then((data) => data.data)
+      .then((dataList) => {
+        setPostList(dataList);
+      })
+      .catch((err) => console.log(err));
+  };
+  
   const logoutHandler = () => {
     Axios.post('http://13.125.205.76:5000/signout')
       .then((res) => props.navigation.navigate('Login'))
       .catch((err) => console.log(err));
   };
-
+  
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
@@ -63,14 +76,23 @@ export default function MainPage(props) {
             }}
           />
         </View>
+        <View style={styles.refreshContainer}>
+          <TouchableOpacity style={styles.refreshButton} onPress={() => setPostListHandler()}>
+            <Text style={styles.menuText}>새로고침</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.mainScrollContainer}>
-          {/* 이부분에서 게시글 검색이 없으면 최신으로 보여주고 아니면 게시글 검색으로 보여주기(serchPost 이용해서) */}
-          {/* serchPost ? postListHandler() : currentPostListHandler() */}
           <ScrollView>
             {serchPost === '' ? currentPostListHandler() : serchPostListHandler()}
           </ScrollView>
           <View style={styles.writterButton}>
-            <TouchableOpacity onPress={() => props.navigation.navigate('WritePage')}>
+            <TouchableOpacity
+              onPress={() =>
+                props.navigation.navigate('WritePage', {
+                  userId: props.navigation.state.params.userId,
+                })
+              }
+            >
               <Text>작성</Text>
             </TouchableOpacity>
           </View>
@@ -139,5 +161,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  refreshButton: {
+    width: 50,
+    height: 40,
+    backgroundColor: '#F3ECA5',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  refreshContainer: {
+    position: 'absolute',
+    left: 330,
   },
 });

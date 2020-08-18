@@ -25,7 +25,7 @@ export default function Login(props) {
       )
       .then(function (res) {
         if (res.status === 201) {
-          props.navigation.navigate('MainPage');
+          props.navigation.navigate('MainPage', { userId });
         }
       })
       .catch(function (err) {
