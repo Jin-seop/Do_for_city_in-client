@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Alert } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Axios from 'axios';
 import MyComment from './MypageComment';
@@ -50,6 +50,19 @@ export default function mypage(props) {
       .then((res) => props.navigation.navigate('Login'))
       .catch((err) => console.log(err));
   };
+
+  const signOutHandler = () => {
+    Alert.alert('회원탈퇴', 'DO.SI.IN 회원을 탈퇴하시겠습니까?', [
+      { text: 'Cancle', onPress: () => props.navigation.navigate('Mypage') },
+      {
+        text: 'OK',
+        onPress: () => {
+          Axios.patch('http://13.125.205.76:5000/mypage/leave');
+          props.navigation.navigate('Login');
+        },
+      },
+    ]);
+  };
   useEffect(() => postCommnetGetHandler(), []);
 
   return (
@@ -91,7 +104,7 @@ export default function mypage(props) {
           </TouchableOpacity>
         </View>
         <View style={styles.secessionButton}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('Login')}>
+          <TouchableOpacity onPress={signOutHandler}>
             <Text>회원 탈퇴</Text>
           </TouchableOpacity>
         </View>
