@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TouchableOpacity, ScrollView, TextInput } from 'react-native-gesture-handler';
 import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
@@ -12,8 +12,8 @@ export default function PostPage(props) {
   };
 
   return (
-    <KeyboardAvoidingView behavior="height" enabled>
-      <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
+    <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
+      <ScrollView>
         <View style={styles.body}>
           <TouchableOpacity style={styles.menuContainer}>
             <Text>메뉴</Text>
@@ -56,8 +56,8 @@ export default function PostPage(props) {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.commetList}>
-          <ScrollView>
+        <View>
+          <ScrollView style={styles.commetList}>
             <View style={styles.commetContainer}>
               <View style={styles.commetWritter}>
                 <Text>작성자</Text>
@@ -84,14 +84,14 @@ export default function PostPage(props) {
             </View>
           </ScrollView>
         </View>
-      </ImageBackground>
-    </KeyboardAvoidingView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   bodyBackgroundImg: { width: '100%', height: '100%' },
-  body: { position: 'absolute', top: 25, left: 15 },
+  body: { position: 'relative', top: 25, left: 15 },
   menuContainer: {
     width: 50,
     height: 40,
@@ -118,12 +118,12 @@ const styles = StyleSheet.create({
   },
   menuText: { fontSize: 10 },
   textContainer: {
-    position: 'absolute',
+    position: 'relative',
     width: 220,
     height: 360,
     backgroundColor: '#F3ECA5',
     left: 100,
-    top: 45,
+    top: -130,
   },
   text: {
     alignItems: 'flex-start',
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   commetWriteContainer: {
-    position: 'absolute',
-    top: 420,
+    position: 'relative',
+    top: -110,
     left: 100,
     width: 220,
     height: 45,
@@ -172,13 +172,15 @@ const styles = StyleSheet.create({
     width: 150,
   },
   commetList: {
-    position: 'absolute',
+    position: 'relative',
     width: 220,
-    height: 200,
-    top: 480,
+    height: '100%',
+    top: -90,
     left: 100,
   },
   commetContainer: {
+    height: '45%',
+    width: '100%',
     marginBottom: 10,
     backgroundColor: '#F3ECA5',
   },
