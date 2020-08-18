@@ -18,7 +18,9 @@ export default function MainPage(props) {
   const currentPostListHandler = () => {
     if (!postList) {
       Axios.get('http://13.125.205.76:5000/contents')
-        .then((data) => data.data)
+        .then((data) => {
+          return data.data;
+        })
         .then((dataList) => {
           setPostList(dataList);
         })
