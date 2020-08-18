@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 export default postList = ({ data, navigation }) => {
   const postHandler = () => {
     // 게시글 클릭시 get요청 후 페이지 라우팅과 해당 받아온 데이터를 props로 보내야 합니다.
-    navigation.navigate('PostPage');
+    navigation.navigate('PostPage', { data });
   };
 
   return (

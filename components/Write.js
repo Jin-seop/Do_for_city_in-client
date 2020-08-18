@@ -71,12 +71,11 @@ const styles = StyleSheet.create({
     width: 220,
     height: 100,
     borderRadius: 5,
-    top: 80,
-    position: 'absolute',
+    top: -40,
+    position: 'relative',
   },
   inputContainer: {
-    position: 'absolute',
-    top: 210,
+    position: 'relative',
   },
   titleInput: {
     width: 250,
@@ -97,8 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   buttonContainer: {
-    top: 510,
-    position: 'absolute',
+    position: 'relative',
     width: 240,
     flexDirection: 'row',
     justifyContent: 'space-between',
