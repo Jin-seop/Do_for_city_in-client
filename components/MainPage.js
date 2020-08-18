@@ -30,6 +30,12 @@ export default function MainPage(props) {
     }
   };
 
+  const logoutHandler = () => {
+    Axios.post('http://13.125.205.76:5000/signout')
+      .then((res) => props.navigation.navigate('Login'))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
       <View style={styles.body}>
@@ -43,10 +49,7 @@ export default function MainPage(props) {
           >
             <Text style={styles.menuText}>마이페이지</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => props.navigation.navigate('Login')}
-          >
+          <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler()}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
           <TextInput
