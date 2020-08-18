@@ -32,10 +32,21 @@ export default function PostPage(props) {
         </View>
         <View style={styles.textContainer}>
           <View style={styles.text}>
-            <Text>게시글</Text>
+            <View style={styles.content_titleContainer}>
+              <Text>
+                제목 : {props.navigation.state.params ? props.navigation.state.params.title : ''}
+              </Text>
+            </View>
+            <Text>
+              본문 :{'\n'}
+              {'  '}
+              {props.navigation.state.params ? props.navigation.state.params.content : ''}
+            </Text>
           </View>
           <View style={styles.writterContainer}>
-            <Text>작성자</Text>
+            <Text>
+              작성자 : {props.navigation.state.params ? props.navigation.state.params.userId : ''}
+            </Text>
             <Text>작성 시간</Text>
           </View>
           <View style={styles.textButton}>
@@ -198,5 +209,13 @@ const styles = StyleSheet.create({
     left: 170,
     top: -20,
     borderRadius: 5,
+  },
+  content_titleContainer: {
+    width: 180,
+    borderBottomWidth: 3,
+    borderBottomColor: 'white',
+    borderRadius: 5,
+    paddingBottom: 5,
+    marginBottom: 5,
   },
 });

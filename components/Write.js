@@ -1,15 +1,42 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function Write(props) {
   const [contentTitle, setContentTitle] = useState('');
   const [contentBody, setContentBody] = useState('');
-
   const postContentHandler = () => {
-    // contentTitle과 contentBody를 이용해 서버로 post요청을 보냅니다.
-    console.log(contentTitle, contentBody);
+    axios
+      .post(
+        'http://13.125.205.76:5000/contents/post',
+        {
+          title: contentTitle,
+          contentBody,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+      .then(function (res) {
+        if (res.status === 200) {
+          // params로 title과 createdAt을 넘겨줘야 PostPage에서 해당 글 정보를 가져올 수 있다.
+          // 그런데 createdAt은 어떻게 넘겨주나?
+          // DB에 저장되있는 createdAt을 불러오기 위해서는, contents로 get요청 하는 수 밖에 없는데.. 이 경우 모든 게시글을 불러오게됨
+          props.navigation.navigate('PostPage', {
+            title: contentTitle,
+            content: contentBody,
+            userId: props.navigation.state.params.userId,
+          });
+        }
+      })
+      .catch(function (err) {
+        alert(err);
+      });
   };
 
   return (
@@ -41,7 +68,9 @@ export default function Write(props) {
           <TouchableOpacity
             style={styles.buttons}
             onPress={() => {
-              props.navigation.navigate('PostPage');
+              props.navigation.navigate('PostPage', {
+                userId: props.navigation.state.params.userId,
+              });
               postContentHandler();
             }}
           >
