@@ -7,7 +7,7 @@ export default postList = ({ data, navigation }) => {
     // 게시글 클릭시 get요청 후 페이지 라우팅과 해당 받아온 데이터를 props로 보내야 합니다.
     navigation.navigate('PostPage');
   };
-
+  console.log(data);
   return (
     <TouchableOpacity
       style={styles.contantContainer}
@@ -19,7 +19,7 @@ export default postList = ({ data, navigation }) => {
         <Text>{data.title}</Text>
       </View>
       <View style={styles.contantWritter}>
-        <Text>작성자</Text>
+        <Text>작성자 : {data.contents === null ? '' : data.contents.userId}</Text>
         <Text>{data.createdAt}</Text>
       </View>
     </TouchableOpacity>
