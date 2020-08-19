@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function PostpageComment(props) {
-  // console.log(props.data.comments.userId);
   return (
     <View style={styles.commetContainer}>
       <View style={styles.commetWritter}>
