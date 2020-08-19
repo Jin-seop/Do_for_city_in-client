@@ -7,6 +7,7 @@ import cityDark from '../assets/city_dark.jpg';
 export default function Write(props) {
   const [contentTitle, setContentTitle] = useState('');
   const [contentBody, setContentBody] = useState('');
+
   const postContentHandler = () => {
     axios
       .post(
@@ -24,13 +25,12 @@ export default function Write(props) {
       )
       .then(function (res) {
         if (res.status === 200) {
-          // params로 title과 createdAt을 넘겨줘야 PostPage에서 해당 글 정보를 가져올 수 있다.
-          // 그런데 createdAt은 어떻게 넘겨주나?
-          // DB에 저장되있는 createdAt을 불러오기 위해서는, contents로 get요청 하는 수 밖에 없는데.. 이 경우 모든 게시글을 불러오게됨
           props.navigation.navigate('PostPage', {
             title: contentTitle,
             content: contentBody,
             userId: props.navigation.state.params.userId,
+            createdAt: res.data.createdAt,
+            id: res.data.id,
           });
         }
       })
