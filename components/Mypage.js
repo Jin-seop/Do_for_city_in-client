@@ -48,17 +48,15 @@ export default function mypage(props) {
       result.push(comment[i]);
     }
     // 이부분 콘솔로그로 확인 후 댓글 표시해주기
-    result.map((post) => console.log(post));
-    // return comment.map((userComment, index) => {
-    //   return (
-    //     <MyComment
-    //       key={index}
-    //       userId={user}
-    //       userComment={userComment}
-    //       navigation={props.navigation}
-    //     />
-    //   );
-    // });
+    return result.map((post, index) => (
+      <MyComment
+        key={index}
+        userId={user}
+        userComment={post.comment}
+        fk_contentId={post.fk_contentId}
+        navigation={props.navigation}
+      />
+    ));
   };
 
   const logoutHandler = () => {
