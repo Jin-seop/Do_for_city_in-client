@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TextInput, TouchableOpacity, ScrollView } from 'react-native-gesture-handler';
 import Axios from 'axios';
@@ -10,7 +10,15 @@ export default function MainPage(props) {
   const [postList, setPostList] = useState();
 
   const serchPostListHandler = () => {
-    console.log(serchPost);
+    const list = [];
+    postList.filter((post) => {
+      if (post.title.includes(serchPost)) {
+        list.push(post);
+      }
+    });
+    return list.map((post, index) => {
+      return <PostList data={post} key={index} navigation={props.navigation} />;
+    });
   };
 
   // 최신 게시글을 받아오는 함수
