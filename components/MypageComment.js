@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default MyComment = ({ userId, userComment, navigation }) => {
   const myCommetHandler = () => {
-    navigation.navigate('PostPage', { userId, userComment });
+    navigation.navigate('PostPage', { data: { userId, userComment } });
   };
   return (
     <TouchableOpacity
@@ -13,7 +13,7 @@ export default MyComment = ({ userId, userComment, navigation }) => {
         myCommetHandler();
       }}
     >
-      <Text>{userComment}</Text>
+      <Text>-{userComment}</Text>
     </TouchableOpacity>
   );
 };
