@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { TouchableOpacity, ScrollView, TextInput } from 'react-native-gesture-handler';
 import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
+import PostpageComment from './PostpageComment';
+
 /*
 이 페이지가 렌더되는 경우는 두 가지, (1) write페이지에서 '글올리기'를 클릭했을 때, (2) mainPage에서 게시글 하나를 클릭했을 때
 (1)의 경우 화면에 보여지는 내용(제목, 본문, 작성자, 작성시간)은 write 페이지에서 params로 넘겨 받은 것이다.
@@ -23,7 +25,7 @@ export default function PostPage(props) {
   const [contents, setContents] = useState();
   const [title, setTitle] = useState();
   const [createdAt, setCreatedAt] = useState();
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState('');
 
   const logoutHandler = () => {
     Axios.post('http://13.125.205.76:5000/signout')
@@ -32,7 +34,11 @@ export default function PostPage(props) {
   };
 
   const commentHandler = () => {
-    // console.log(comments);
+    const result = [];
+    for (let i = comments.length - 1; i >= 0; i--) {
+      result.push(comments[i]);
+    }
+    return result.map((comment, key) => <PostpageComment key={key} data={comment} />);
   };
 
   // 각 페이지에서 이동했을 때 게시글 상세정보를 받아오는 함수
@@ -110,8 +116,8 @@ export default function PostPage(props) {
     Axios.post(
       'http://13.125.205.76:5000/comments',
       {
-        title: props.navigation.state.params.title,
-        createdAt: props.navigation.state.params.createdAt,
+        title,
+        createdAt,
         comment: commentToPost,
       },
       {
@@ -127,6 +133,7 @@ export default function PostPage(props) {
       .catch(function (err) {
         alert(err);
       });
+    getCommentHandler();
   };
 
   // useEffect(() => {
@@ -149,6 +156,10 @@ export default function PostPage(props) {
       }
     }
   }, [props.navigation.state.params.data]);
+
+  useEffect(() => {
+    commentHandler();
+  }, []);
 
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
@@ -244,15 +255,23 @@ export default function PostPage(props) {
           <View style={styles.commetInputButton}>
             <TouchableOpacity
               onPress={(e) => {
-                postCommentHandler();
+                // if (commentToPost) {
+                if (commentToPost.length >= 50) {
+                  alert('글자수를 50자 미만으로 해주세요');
+                } else {
+                  postCommentHandler();
+                }
+                // }
               }}
             >
               <Text>등록</Text>
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <ScrollView style={styles.commetList}>{commentHandler()}</ScrollView>
+        <View style={styles.commetListContainer}>
+          <ScrollView style={styles.commetList}>
+            {comments ? commentHandler() : <Text />}
+          </ScrollView>
         </View>
       </ScrollView>
     </ImageBackground>
@@ -341,12 +360,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     width: 150,
   },
-  commetList: {
+  commetListContainer: {
     position: 'relative',
     width: 220,
-    height: '100%',
+    height: 500,
     top: -90,
     left: 100,
+  },
+  commetList: {
+    position: 'absolute',
+    width: 220,
+    height: '100%',
   },
 
   commetButton: {
