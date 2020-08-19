@@ -115,7 +115,9 @@ export default function mypage(props) {
           </ScrollView>
         </View>
         <View style={styles.reviseButton}>
-          <TouchableOpacity onPress={() => props.navigation.navigate('EditUserInfo')}>
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('EditUserInfo', { userId: user })}
+          >
             <Text>내 정보 수정하기</Text>
           </TouchableOpacity>
         </View>
