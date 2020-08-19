@@ -1,36 +1,55 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, ImageBackground } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function EditUserInfo(props) {
-  const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordCheck, setUserPasswordCheck] = useState('');
   const [userEmail, setUserEmail] = useState('');
 
   const editUserInfoHandler = () => {
-    console.log('a');
-    // console.log(userId, userPassword, userPasswordCheck, userEmail);
-    // To do : put요청을 통해 회원정보를 수정하는 로직을 추가해야 합니다.
+    const checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    if (
+      userPassword.length === 0 ||
+      userPasswordCheck.length === 0 ||
+      userEmail.length === 0 ||
+      userPassword !== userPasswordCheck
+    ) {
+      return alert('입력이 잘 못 되었습니다. 다시입력해 주세요');
+    }
+
+    if (userPassword.length < 8) {
+      return alert('비밀번호를 8자 이상으로 해주세요');
+    }
+
+    if (!checkEmail.test(userEmail)) {
+      return alert('이메일이 잘 못 되었습니다');
+    }
+
+    Axios.put('http://13.125.205.76:5000/mypage/setup', {
+      userId: props.navigation.state.params.userId,
+      password: userPassword,
+      email: userEmail,
+    }).then((res) => {
+      if (res.status === 201) {
+        return alert('변경이 완료되었습니다');
+      }
+    });
   };
   return (
     <ImageBackground style={styles.imageBackground} source={cityDark} resizeMode="cover">
       <View style={styles.container}>
         <Text style={styles.logo}>DO.SI.IN{'\n'}회원정보 수정</Text>
         <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputBox}
-            placeholder="아이디"
-            onChange={(e) => {
-              e.preventDefault();
-              setUserId(e.nativeEvent.text);
-            }}
-          />
+          <Text style={styles.inputBox} placeholder="아이디">
+            {props.navigation.state.params.userId}
+          </Text>
           <TextInput
             style={styles.inputBox}
             secureTextEntry
-            placeholder="비밀번호"
+            placeholder="비밀번호 8자 이상"
             onChange={(e) => {
               e.preventDefault();
               setUserPassword(e.nativeEvent.text);
