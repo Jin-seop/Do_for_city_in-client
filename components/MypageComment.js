@@ -2,9 +2,9 @@ import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default MyComment = ({ userId, userComment, navigation }) => {
+export default MyComment = ({ userId, userComment, fk_contentId, navigation }) => {
   const myCommetHandler = () => {
-    navigation.navigate('PostPage', { data: { userId, userComment } });
+    navigation.navigate('PostPage', { data: { userId, userComment, fk_contentId } });
   };
   return (
     <TouchableOpacity

@@ -18,38 +18,73 @@ export default function PostPage(props) {
   // const [reviseTitle, setReviseTitle] = useState(undefined);
   // const [reviseBody, setReviseBody] = useState(undefined);
   const [commentToPost, setCommentToPost] = useState('');
-  const [getComment, setGetComment] = useState();
 
-  // useEffect(() => {
-  //   setReviseTitle(props.navigation.state.params.title);
-  // }, []);
-  // useEffect(() => {
-  //   setReviseBody(props.navigation.state.params.content);
-  // }, []);
+  const [userId, setUserId] = useState();
+  const [contents, setContents] = useState();
+  const [title, setTitle] = useState();
+  const [createdAt, setCreatedAt] = useState();
+  const [comments, setComments] = useState([]);
 
   const logoutHandler = () => {
     Axios.post('http://13.125.205.76:5000/signout')
       .then((res) => props.navigation.navigate('Login'))
       .catch((err) => console.log(err));
   };
-  // 해당 게시글의 댓글을 받아오는 함수를 작성해야 한다.(아직 미완성)
-  const getCommentHandler = () => {
-    Axios.post('http://13.125.205.76:5000/contentDetail', {
-      title: props.navigation.state.params.title,
-      createdAt: props.navigation.state.params.createdAt,
-      comment: commentToPost,
-    })
-      .then((res) => {
-        console.log(res);
-        // setGetComment(res.data.comment);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+  const commentHandler = () => {
+    // console.log(comments);
   };
-  // 게시글 내용을 수정하는 함수
-  // const contentUpdataHandler = () => {
-  //   Axios.put(
+
+  // 각 페이지에서 이동했을 때 게시글 상세정보를 받아오는 함수
+  const getCommentHandler = () => {
+    if (props.navigation.state.params.data.fk_contentId) {
+      return Axios.post('http://13.125.205.76:5000/mypage/toComment', {
+        fk_contentId: props.navigation.state.params.data.fk_contentId,
+      })
+        .then((res) => {
+          setUserId(res.data[0].contents.userId);
+          setContents(res.data[0].content);
+          setTitle(res.data[0].title);
+          setCreatedAt(res.data[0].createdAt);
+          setComments(res.data[0].commentsContent);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (props.navigation.state.params.data.userpost) {
+      return Axios.post('http://13.125.205.76:5000/mypage/toContent', {
+        title: props.navigation.state.params.data.userpost,
+      })
+        .then((res) => {
+          setUserId(res.data[0].contents.userId);
+          setContents(res.data[0].content);
+          setTitle(res.data[0].title);
+          setCreatedAt(res.data[0].createdAt);
+          setComments(res.data[0].commentsContent);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    if (props.navigation.state.params.data.createdAt) {
+      return Axios.post('http://13.125.205.76:5000/contentDetail', {
+        title: props.navigation.state.params.data.title,
+        createdAt: props.navigation.state.params.data.createdAt,
+      })
+        .then((res) => {
+          setUserId(res.data[0].contents.userId);
+          setContents(res.data[0].content);
+          setTitle(res.data[0].title);
+          setCreatedAt(res.data[0].createdAt);
+          setComments(res.data[0].commentsContent);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   //     'http://13.125.205.76:5000/contents/update',
   //     {
   //       id: props.navigation.state.params.id,
@@ -70,6 +105,7 @@ export default function PostPage(props) {
   //       alert(err);
   //     });
   // };
+
   const postCommentHandler = () => {
     Axios.post(
       'http://13.125.205.76:5000/comments',
@@ -91,8 +127,28 @@ export default function PostPage(props) {
       .catch(function (err) {
         alert(err);
       });
-    getCommentHandler();
   };
+
+  // useEffect(() => {
+  //   setReviseTitle(props.navigation.state.params.title);
+  // }, []);
+  // useEffect(() => {
+  //   setReviseBody(props.navigation.state.params.content);
+  // }, []);
+
+  useEffect(() => {
+    if (props.navigation.state.params.data) {
+      if (props.navigation.state.params.data.write) {
+        setUserId(props.navigation.state.params.data.userId);
+        setContents(props.navigation.state.params.data.content);
+        setTitle(props.navigation.state.params.data.title);
+        setCreatedAt(props.navigation.state.params.data.createdAt);
+        setComments(props.navigation.state.params.data.commentsContent);
+      } else {
+        getCommentHandler();
+      }
+    }
+  }, [props.navigation.state.params.data]);
 
   return (
     <ImageBackground source={cityDark} resizeMode="cover" style={styles.bodyBackgroundImg}>
@@ -119,7 +175,7 @@ export default function PostPage(props) {
         </View>
         <View style={styles.textContainer}>
           <View style={styles.text}>
-            <View style={styles.content_titleContainer}>
+            <View style={styles.contentTitleContainer}>
               {/* reviseMode인 경우와 아닌 경우에 따라 각각 다른 컴포넌트를 렌더해야 합니다.
               {reviseMode === false ? (
                 <Text>제목 : {reviseTitle || props.navigation.state.params.title}</Text>
@@ -131,7 +187,7 @@ export default function PostPage(props) {
                   }}
                 />
               )} */}
-              <Text>제목 : {props.navigation.state.params.title}</Text>
+              <Text>제목 : {title}</Text>
             </View>
             {/* reviseMode인 경우와 아닌 경우에 따라 각각 다른 컴포넌트를 렌더해야 합니다. 
             {reviseMode === false ? (
@@ -151,12 +207,12 @@ export default function PostPage(props) {
             <Text>
               본문 :{'\n'}
               {'  '}
-              {props.navigation.state.params.title}
+              {contents}
             </Text>
           </View>
           <View style={styles.writterContainer}>
-            <Text>작성자 : {props.navigation.state.params.userId}</Text>
-            <Text>작성 시간 : {props.navigation.state.params.createdAt}</Text>
+            <Text>작성자 : {userId}</Text>
+            <Text>작성 시간 : {createdAt}</Text>
           </View>
           {/* <View style={styles.textButton}>
             <TouchableOpacity
@@ -196,32 +252,7 @@ export default function PostPage(props) {
           </View>
         </View>
         <View>
-          <ScrollView style={styles.commetList}>
-            <View style={styles.commetContainer}>
-              <View style={styles.commetWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-              <View style={styles.commet}>
-                <Text>댓글</Text>
-              </View>
-              {/* <TouchableOpacity style={styles.commetButton}>
-                <Text>수정</Text>
-              </TouchableOpacity> */}
-            </View>
-            <View style={styles.commetContainer}>
-              <View style={styles.commetWritter}>
-                <Text>작성자</Text>
-                <Text>작성 시간</Text>
-              </View>
-              <View style={styles.commet}>
-                <Text>댓글</Text>
-              </View>
-              {/* <TouchableOpacity style={styles.commetButton}>
-                <Text>수정</Text>
-              </TouchableOpacity> */}
-            </View>
-          </ScrollView>
+          <ScrollView style={styles.commetList}>{commentHandler()}</ScrollView>
         </View>
       </ScrollView>
     </ImageBackground>
@@ -317,23 +348,7 @@ const styles = StyleSheet.create({
     top: -90,
     left: 100,
   },
-  commetContainer: {
-    height: '45%',
-    width: '100%',
-    marginBottom: 10,
-    backgroundColor: '#F3ECA5',
-  },
-  commetWritter: {
-    marginTop: 10,
-    marginLeft: 10,
-    width: 60,
-  },
-  commet: {
-    height: 50,
-    top: -10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   commetButton: {
     backgroundColor: 'white',
     width: 40,
@@ -344,7 +359,7 @@ const styles = StyleSheet.create({
     top: -20,
     borderRadius: 5,
   },
-  content_titleContainer: {
+  contentTitleContainer: {
     width: 180,
     borderBottomWidth: 3,
     borderBottomColor: 'white',

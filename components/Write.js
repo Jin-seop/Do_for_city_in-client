@@ -9,12 +9,12 @@ export default function Write(props) {
   const [contentBody, setContentBody] = useState('');
 
   const postContentHandler = () => {
-    axios
+    return axios
       .post(
         'http://13.125.205.76:5000/contents/post',
         {
           title: contentTitle,
-          contentBody,
+          content: contentBody,
         },
         {
           headers: {
@@ -26,11 +26,14 @@ export default function Write(props) {
       .then(function (res) {
         if (res.status === 200) {
           props.navigation.navigate('PostPage', {
-            title: contentTitle,
-            content: contentBody,
-            userId: props.navigation.state.params.userId,
-            createdAt: res.data.createdAt,
-            id: res.data.id,
+            data: {
+              title: contentTitle,
+              content: contentBody,
+              userId: props.navigation.state.params.userId,
+              createdAt: res.data.createdAt,
+              id: res.data.id,
+              write: true,
+            },
           });
         }
       })
@@ -62,16 +65,20 @@ export default function Write(props) {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttons}>
+          <TouchableOpacity style={styles.buttons} onPress={() => alert('기능 구현중입니다.')}>
             <Text style={styles.buttonText}>사진첨부</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.buttons}
             onPress={() => {
-              props.navigation.navigate('PostPage', {
-                userId: props.navigation.state.params.userId,
-              });
-              postContentHandler();
+              if (contentTitle.length !== 0 && contentBody.length !== 0) {
+                props.navigation.navigate('PostPage', {
+                  userId: props.navigation.state.params.userId,
+                });
+                postContentHandler();
+              } else {
+                alert('내용을 입력해주세요');
+              }
             }}
           >
             <Text style={styles.buttonText}>글올리기</Text>
