@@ -14,7 +14,7 @@ export default function Write(props) {
         'http://13.125.205.76:5000/contents/post',
         {
           title: contentTitle,
-          contentBody,
+          content: contentBody,
         },
         {
           headers: {
