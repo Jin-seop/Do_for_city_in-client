@@ -63,7 +63,7 @@ Back-end
 - Team leader
 - Front-end
 - Gmail :  turn3361@gmail.com
-- GitHub : https://newjsdeveloper.tistory.com/
+- GitHub : https://github.com/Jin-seop
 - Blog : https://newjsdeveloper.tistory.com/
 
 ## :busts_in_silhouette: 박진수
