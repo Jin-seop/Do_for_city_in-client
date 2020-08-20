@@ -183,6 +183,11 @@ export default function PostPage(props) {
           <TouchableOpacity style={styles.logoutButton} onPress={logoutHandler}>
             <Text style={styles.menuText}>로그아웃</Text>
           </TouchableOpacity>
+          <View style={styles.refreshContainer}>
+            <TouchableOpacity style={styles.refreshButton} onPress={() => getCommentHandler()}>
+              <Text style={styles.menuText}>새로고침</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View style={styles.textContainer}>
           <View style={styles.text}>
@@ -258,6 +263,8 @@ export default function PostPage(props) {
                 // if (commentToPost) {
                 if (commentToPost.length >= 50) {
                   alert('글자수를 50자 미만으로 해주세요');
+                } else if (commentToPost.length === 0) {
+                  alert('내용이 없습니다');
                 } else {
                   postCommentHandler();
                 }
@@ -298,6 +305,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoutButton: {
+    width: 50,
+    height: 40,
+    backgroundColor: '#F3ECA5',
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  refreshContainer: {
+    position: 'absolute',
+    left: 330,
+  },
+  refreshButton: {
     width: 50,
     height: 40,
     backgroundColor: '#F3ECA5',
