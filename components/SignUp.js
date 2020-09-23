@@ -10,7 +10,6 @@ export default function SignUp(props) {
   const [checkPassword, setCheckPassword] = useState('');
   const [email, setEmail] = useState('');
 
-  // id 체크하는 함수
   const idCheckHandler = () => {
     if (userId.length === 0) {
       alert('아이디를 입력해주세요');
@@ -38,9 +37,7 @@ export default function SignUp(props) {
       });
   };
 
-  // 가입하기 버튼 함수
   const signUpHandler = () => {
-    // 이메일 유효성 검사 정규식
     const checkEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     if (
       userId.length === 0 ||
@@ -78,7 +75,6 @@ export default function SignUp(props) {
         }
       )
       .then((res) => {
-        // 입력이 완료되었을 때 로그인 창으로 보내는 라우터
         if (res.status === 201) {
           props.navigation.navigate('Login');
           return alert('가입이 완료 되었습니다.');

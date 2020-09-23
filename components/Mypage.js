@@ -7,7 +7,6 @@ import MyPost from './MypagePost';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function mypage(props) {
-  // 게시물 뿌려줄 때 해당 함수를 클릭하면 서버에 요청해서 해당 게시물로 가도록 만들면 됩니다.
   const [post, setPost] = useState();
   const [comment, setComment] = useState();
   const [user, setUser] = useState();
@@ -47,7 +46,7 @@ export default function mypage(props) {
     for (let i = comment.length - 1; i >= 0; i--) {
       result.push(comment[i]);
     }
-    // 이부분 콘솔로그로 확인 후 댓글 표시해주기
+
     return result.map((post, index) => (
       <MyComment
         key={index}

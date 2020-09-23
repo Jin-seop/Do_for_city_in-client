@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { Text, View, ImageBackground } from 'react-native';
 import cityDark from '../assets/city_dark.jpg';
 
 export default function ErrorPage() {
@@ -32,5 +32,3 @@ export default function ErrorPage() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

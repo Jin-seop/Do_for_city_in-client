@@ -11,9 +11,6 @@ export default function PostpageComment(props) {
       <View style={styles.commet}>
         <Text>{props.data.comment}</Text>
       </View>
-      {/* <TouchableOpacity style={styles.commetButton}>
-      <Text>수정</Text>
-    </TouchableOpacity> */}
     </View>
   );
 }

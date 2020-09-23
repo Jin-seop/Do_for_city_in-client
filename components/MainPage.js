@@ -21,7 +21,6 @@ export default function MainPage(props) {
     });
   };
 
-  // 최신 게시글을 받아오는 함수
   const currentPostListHandler = () => {
     if (!postList) {
       Axios.get('http://13.125.205.76:5000/contents')

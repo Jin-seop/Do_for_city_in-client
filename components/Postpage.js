@@ -6,19 +6,7 @@ import Axios from 'axios';
 import cityDark from '../assets/city_dark.jpg';
 import PostpageComment from './PostpageComment';
 
-/*
-이 페이지가 렌더되는 경우는 두 가지, (1) write페이지에서 '글올리기'를 클릭했을 때, (2) mainPage에서 게시글 하나를 클릭했을 때
-(1)의 경우 화면에 보여지는 내용(제목, 본문, 작성자, 작성시간)은 write 페이지에서 params로 넘겨 받은 것이다.
-(1)의 경우에서 현재는 수정 버튼을 클릭했다가 완료 버튼을 클릭하면 화면에 보여지는 내용들은 params로 넘겨 받은 것에서 사용자가 수정한 내용이다.
-(1)의 경우 댓글 등록 기능이 작동되고 있는데, 가능한 이유는 write 페이지에서 params로 받아온 title과 createdAt을(사용자가 수정했을 경우 reviseTitle) 보내주기 때문.
-하지만 (2)의 경우 
-
-*/
-
 export default function PostPage(props) {
-  // const [reviseMode, setReviseMode] = useState(false);
-  // const [reviseTitle, setReviseTitle] = useState(undefined);
-  // const [reviseBody, setReviseBody] = useState(undefined);
   const [commentToPost, setCommentToPost] = useState('');
 
   const [userId, setUserId] = useState();
@@ -41,7 +29,6 @@ export default function PostPage(props) {
     return result.map((comment, key) => <PostpageComment key={key} data={comment} />);
   };
 
-  // 각 페이지에서 이동했을 때 게시글 상세정보를 받아오는 함수
   const getCommentHandler = () => {
     if (props.navigation.state.params.data.fk_contentId) {
       return Axios.post('http://13.125.205.76:5000/mypage/toComment', {
@@ -91,27 +78,6 @@ export default function PostPage(props) {
     }
   };
 
-  //     'http://13.125.205.76:5000/contents/update',
-  //     {
-  //       id: props.navigation.state.params.id,
-  //       title: props.navigation.state.params.title,
-  //       content: props.navigation.state.params.contentBody,
-  //     },
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json;charset=UTF-8',
-  //         'Access-Control-Allow-Origin': '*',
-  //       },
-  //     }
-  //   )
-  //     .then(function (res) {
-  //       alert('성공적으로 수정 되었습니다');
-  //     })
-  //     .catch(function (err) {
-  //       alert(err);
-  //     });
-  // };
-
   const postCommentHandler = () => {
     Axios.post(
       'http://13.125.205.76:5000/comments',
@@ -135,13 +101,6 @@ export default function PostPage(props) {
       });
     getCommentHandler();
   };
-
-  // useEffect(() => {
-  //   setReviseTitle(props.navigation.state.params.title);
-  // }, []);
-  // useEffect(() => {
-  //   setReviseBody(props.navigation.state.params.content);
-  // }, []);
 
   useEffect(() => {
     if (props.navigation.state.params.data) {
@@ -192,34 +151,9 @@ export default function PostPage(props) {
         <View style={styles.textContainer}>
           <View style={styles.text}>
             <View style={styles.contentTitleContainer}>
-              {/* reviseMode인 경우와 아닌 경우에 따라 각각 다른 컴포넌트를 렌더해야 합니다.
-              {reviseMode === false ? (
-                <Text>제목 : {reviseTitle || props.navigation.state.params.title}</Text>
-              ) : (
-                <TextInput
-                  value={reviseTitle}
-                  onChange={(e) => {
-                    setReviseTitle(e.nativeEvent.text);
-                  }}
-                />
-              )} */}
               <Text>제목 : {title}</Text>
             </View>
-            {/* reviseMode인 경우와 아닌 경우에 따라 각각 다른 컴포넌트를 렌더해야 합니다. 
-            {reviseMode === false ? (
-              <Text>
-                본문 :{'\n'}
-                {'  '}
-                {reviseBody}
-              </Text>
-            ) : (
-              <TextInput
-                value={reviseBody}
-                onChange={(e) => {
-                  setReviseBody(e.nativeEvent.text);
-                }}
-              />
-            )} */}
+
             <Text>
               본문 :{'\n'}
               {'  '}
@@ -230,23 +164,6 @@ export default function PostPage(props) {
             <Text>작성자 : {userId}</Text>
             <Text>작성 시간 : {createdAt}</Text>
           </View>
-          {/* <View style={styles.textButton}>
-            <TouchableOpacity
-              onPress={() => {
-                setReviseMode(!reviseMode);
-                if (reviseMode === true) {
-                  contentUpdataHandler();
-                }
-                // reviseMode가 true라면 이때 reviseTitle과 reviseBody를 가지고 서버로 put요청을 보내야 한다.
-                // put요청을 보내는 함수를 여기서 실행시킴.
-                // 그리고 화면상에 reviseTitle과 reviseBody를 렌더해야한다.
-              }}
-            >
-              <Text>
-                {reviseMode === false ? '수정' : '완료'}
-              </Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
         <View style={styles.commetWriteContainer}>
           <TextInput
@@ -260,7 +177,6 @@ export default function PostPage(props) {
           <View style={styles.commetInputButton}>
             <TouchableOpacity
               onPress={(e) => {
-                // if (commentToPost) {
                 if (commentToPost.length >= 50) {
                   alert('글자수를 50자 미만으로 해주세요');
                 } else if (commentToPost.length === 0) {
@@ -268,7 +184,6 @@ export default function PostPage(props) {
                 } else {
                   postCommentHandler();
                 }
-                // }
               }}
             >
               <Text>등록</Text>
