@@ -54,7 +54,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Navigation" component={Navigation} />
+        <Stack.Screen
+          name="Navigation"
+          component={Navigation}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Kategorie" component={Kategorie} />
         <Stack.Screen name="Mypage" component={Mypage} />
         <Stack.Screen name="CookSiIn" component={CookSiIn} />
