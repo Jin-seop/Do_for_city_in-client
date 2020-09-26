@@ -3,6 +3,11 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {
+  MaterialCommunityIcons,
+  Entypo,
+  MaterialIcons,
+} from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -10,10 +15,44 @@ const Tab = createBottomTabNavigator();
 function Navigation() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="홈" component={Home} />
-      <Tab.Screen name="카테고리" component={Kategorie} />
-      <Tab.Screen name="마이페이지" component={Mypage} />
-      <Tab.Screen name="Cook.Si.In" component={CookSiIn} />
+      <Tab.Screen
+        name="홈"
+        component={Home}
+        options={{
+          tabBarIcon: () => (
+            <MaterialCommunityIcons name="home" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="카테고리"
+        component={Kategorie}
+        options={{
+          tabBarIcon: () => <Entypo name="list" size={24} color="black" />,
+        }}
+      />
+      <Tab.Screen
+        name="마이페이지"
+        component={Mypage}
+        options={{
+          tabBarIcon: () => (
+            <MaterialIcons name="people" size={24} color="black" />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Cook.Si.In"
+        component={CookSiIn}
+        options={{
+          tabBarIcon: () => (
+            <MaterialCommunityIcons
+              name="alpha-i-circle-outline"
+              size={24}
+              color="black"
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
