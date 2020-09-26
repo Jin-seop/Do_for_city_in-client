@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,6 +7,7 @@ import {
   Entypo,
   MaterialIcons,
 } from '@expo/vector-icons';
+import { Home, Kategorie, Mypage, CookSiIn } from './components';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -54,38 +54,6 @@ function Navigation() {
         }}
       />
     </Tab.Navigator>
-  );
-}
-
-function Home() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function Kategorie() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Kategorie!</Text>
-    </View>
-  );
-}
-
-function Mypage() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>마이페이지!</Text>
-    </View>
-  );
-}
-
-function CookSiIn() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>CookSiIn!</Text>
-    </View>
   );
 }
 

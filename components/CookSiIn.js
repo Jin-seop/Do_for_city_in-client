@@ -1,10 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-export const CookSiIn = () => {
+function CookSiIn() {
   return (
-    <View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>CookSiIn!</Text>
     </View>
   );
-};
+}
+
+export default CookSiIn;
