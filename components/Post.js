@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import {
@@ -7,14 +8,25 @@ import {
 } from 'react-native-gesture-handler';
 
 function Post(props) {
-  const [data, setData] = useState();
+  const getPostInfo = () => {
+    if (props.route.params.data.createdAt) {
+      Axios.post('http://13.125.205.76:5000/contentDetail', {
+        title: props.route.params.data.title,
+        createdAt: props.route.params.data.createdAt,
+      })
+        .then((res) => console.log(res))
+        .catch((err) => {
+          alert('로그인 회원만 볼 수 있습니다.');
+          props.navigation.goBack();
+        });
+    }
+  };
 
   useEffect(() => {
-    if (props.route) {
-      setData(props.route.params.data);
+    if (props.route.params.data.createdAt) {
+      getPostInfo();
     }
-  }, [props]);
-  console.log(data);
+  }, []);
   return (
     <View style={{ flex: 1, width: '100%', height: '100%' }}>
       <ScrollView>
