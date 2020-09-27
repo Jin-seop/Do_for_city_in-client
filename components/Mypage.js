@@ -3,7 +3,7 @@ import { Text, View, Image, Button } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import logo from '../assets/logo.png';
 
-function Mypage() {
+function Mypage(props) {
   return (
     <View style={{ backgroundColor: '#C4C4C4', width: '100%', height: '100%' }}>
       <View
@@ -23,7 +23,19 @@ function Mypage() {
         <Text style={{ marginTop: 15, marginBottom: 15, fontSize: 24 }}>
           다양한 혜택을 받아보세요!
         </Text>
-        <Button title="로그인/회원가입" color="#2D3664" />
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#2D3664',
+            height: 40,
+            width: 230,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 5,
+          }}
+          onPress={() => props.navigation.navigate('로그인')}
+        >
+          <Text style={{ color: 'white' }}>로그인/회원가입</Text>
+        </TouchableOpacity>
       </View>
 
       <View
