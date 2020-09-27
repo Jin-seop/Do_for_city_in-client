@@ -43,6 +43,7 @@ function Login(props) {
           borderRadius: 5,
           marginBottom: 15,
         }}
+        onPress={() => props.navigation.navigate('Navigation')}
       >
         <Text style={{ color: 'white' }}>로그인</Text>
       </TouchableOpacity>
