@@ -22,13 +22,7 @@ function Navigation() {
           tabBarIcon: () => (
             <MaterialCommunityIcons name="home" size={24} color="black" />
           ),
-        }}
-      />
-      <Tab.Screen
-        name="카테고리"
-        component={Kategorie}
-        options={{
-          tabBarIcon: () => <Entypo name="list" size={24} color="black" />,
+          title: '홈',
         }}
       />
       <Tab.Screen
@@ -61,12 +55,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Navigation"
-          component={Navigation}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Kategorie" component={Kategorie} />
+        <Stack.Screen name="Navigation" component={Navigation} />
         <Stack.Screen name="Mypage" component={Mypage} />
         <Stack.Screen name="CookSiIn" component={CookSiIn} />
       </Stack.Navigator>
