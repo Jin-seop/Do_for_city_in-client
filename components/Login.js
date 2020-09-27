@@ -1,8 +1,25 @@
-import React from 'react';
+import Axios from 'axios';
+import React, { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 function Login(props) {
+  const [userId, setUserId] = useState('');
+  const [password, setPassword] = useState('');
+
+  const loginHandler = () => {
+    Axios.post('http://13.125.205.76:5000/signin', {
+      userId,
+      password,
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          alert('로그인 성공');
+          props.navigation.navigate('Mypage', { userId });
+        }
+      })
+      .catch((err) => alert('유저정보가 잘 못 되었습니다.'));
+  };
   return (
     <View
       style={{
@@ -21,8 +38,10 @@ function Login(props) {
           marginTop: 150,
           paddingLeft: 10,
         }}
+        onChange={(e) => setUserId(e.nativeEvent.text)}
       />
       <TextInput
+        secureTextEntry={true}
         placeholder="비밀번호"
         style={{
           borderWidth: 0.5,
@@ -33,6 +52,7 @@ function Login(props) {
           marginBottom: 30,
           paddingLeft: 10,
         }}
+        onChange={(e) => setPassword(e.nativeEvent.text)}
       />
 
       <TouchableOpacity
@@ -45,7 +65,9 @@ function Login(props) {
           borderRadius: 5,
           marginBottom: 15,
         }}
-        onPress={() => props.navigation.navigate('Navigation')}
+        onPress={() => {
+          loginHandler();
+        }}
       >
         <Text style={{ color: 'white' }}>로그인</Text>
       </TouchableOpacity>
