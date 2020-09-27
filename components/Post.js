@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import {
   ScrollView,
@@ -6,7 +6,15 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 
-function Post() {
+function Post(props) {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (props.route) {
+      setData(props.route.params.data);
+    }
+  }, [props]);
+  console.log(data);
   return (
     <View style={{ flex: 1, width: '100%', height: '100%' }}>
       <ScrollView>
@@ -22,7 +30,13 @@ function Post() {
         </View>
 
         <View style={{ borderWidth: 0.4, marginTop: 15, height: 250 }}>
-          <Text style={{ marginLeft: 20, marginTop: 20 }}>글 설명</Text>
+          <View
+            style={{ marginLeft: 20, marginTop: 20, flexDirection: 'column' }}
+          >
+            <Text>제목 : {}</Text>
+            <Text style={{ marginTop: 10, marginBottom: 10 }}>작성자 : {}</Text>
+            <Text>시간 : {}</Text>
+          </View>
         </View>
 
         <TouchableOpacity style={{ marginTop: 20, borderWidth: 0.4 }}>
