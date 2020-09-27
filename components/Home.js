@@ -1,9 +1,13 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import {
+  ScrollView,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import logo from '../assets/logo.png';
 
-function Home() {
+function Home(props) {
   return (
     <View>
       <View
@@ -32,6 +36,7 @@ function Home() {
             height: 40,
             backgroundColor: 'white',
             borderRadius: 5,
+            paddingLeft: 10,
           }}
           placeholder="검색"
         />
@@ -40,7 +45,7 @@ function Home() {
       <ScrollView
         style={{ marginTop: 15, flexDirection: 'column', height: '80%' }}
       >
-        <View
+        <TouchableOpacity
           style={{
             height: 150,
             backgroundColor: '#C4C4C4',
@@ -48,10 +53,11 @@ function Home() {
             flexDirection: 'row',
             marginBottom: 15,
           }}
+          onPress={() => props.navigation.navigate('게시글')}
         >
           <Text>사진</Text>
           <Text>설명</Text>
-        </View>
+        </TouchableOpacity>
 
         <View
           style={{

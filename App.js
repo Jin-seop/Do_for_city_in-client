@@ -3,7 +3,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
-import { Home, Mypage, CookSiIn, Login, SignUp } from './components';
+import {
+  Home,
+  Mypage,
+  CookSiIn,
+  Login,
+  SignUp,
+  SetUp,
+  Post,
+} from './components';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -59,6 +67,8 @@ export default function App() {
         <Stack.Screen name="CookSiIn" component={CookSiIn} />
         <Stack.Screen name="로그인" component={Login} />
         <Stack.Screen name="회원가입" component={SignUp} />
+        <Stack.Screen name="회원정보수정" component={SetUp} />
+        <Stack.Screen name="게시글" component={Post} />
       </Stack.Navigator>
     </NavigationContainer>
   );

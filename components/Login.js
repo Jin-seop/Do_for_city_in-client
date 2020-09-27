@@ -19,6 +19,7 @@ function Login(props) {
           height: 40,
           borderRadius: 5,
           marginTop: 150,
+          paddingLeft: 10,
         }}
       />
       <TextInput
@@ -30,6 +31,7 @@ function Login(props) {
           borderRadius: 5,
           marginTop: 15,
           marginBottom: 30,
+          paddingLeft: 10,
         }}
       />
 
