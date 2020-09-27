@@ -34,17 +34,21 @@ function Post() {
             <Text>댓글</Text>
           </View>
         </TouchableOpacity>
-
-        <TextInput
-          placeholder="댓글"
-          style={{
-            borderWidth: 0.8,
-            height: 40,
-            marginTop: 50,
-            paddingLeft: 10,
-          }}
-        />
       </ScrollView>
+
+      <TextInput
+        placeholder="댓글"
+        style={{
+          borderWidth: 0.8,
+          height: 40,
+          width: '100%',
+          marginTop: 50,
+          paddingLeft: 10,
+          position: 'absolute',
+          bottom: 0,
+          backgroundColor: 'white',
+        }}
+      />
     </View>
   );
 }
