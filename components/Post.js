@@ -8,10 +8,12 @@ import {
 } from 'react-native-gesture-handler';
 
 function Post(props) {
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [writer, setWriter] = useState('');
   const [photo, setPhoto] = useState('');
   const [createdAt, setCreatedAt] = useState('');
+  const [commentToPost, setCommentToPost] = useState('');
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -20,12 +22,11 @@ function Post(props) {
         createdAt: props.route.params.data.createdAt,
       })
         .then((res) => {
+          console.log('res:', res.data[0])
         setContent(res.data[0].content)
         setWriter(res.data[0].contents.userId)
-
-        let rowDate = res.data[0].createdAt;
-        let date = `${rowDate.substring(0, 4)}년 ${rowDate.substring(5,7)}월 ${rowDate.substring(8, 10)}일 ${rowDate.substring(11,13)}시 ${rowDate.substring(14,16)}분`;
-        setCreatedAt(date)
+        setTitle(res.data[0].title)
+        setCreatedAt(res.data[0].createdAt)
         // 이미지를 state로 지정해야 합니다.
         })
         .catch((err) => {
@@ -33,6 +34,30 @@ function Post(props) {
           props.navigation.goBack();
         });
     }
+  };
+
+  const postCommentHandler = () => {
+    Axios.post(
+      'http://13.125.205.76:5000/comments',
+      {
+        title:title,
+        createdAt:createdAt,
+        comment: commentToPost,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    )
+      .then(function (res) {
+        alert('댓글 등록완료');
+      })
+      .catch(function (err) {
+        alert(err);
+      });
+      getPostInfo();
   };
 
   useEffect(() => {
@@ -75,10 +100,9 @@ function Post(props) {
           </View>
         </TouchableOpacity>
       </ScrollView>
-
-      <TextInput
-        placeholder="댓글"
-        style={{
+      <View
+          style={{  
+          justifyContent: 'center',
           borderWidth: 0.8,
           height: 40,
           width: '100%',
@@ -87,8 +111,20 @@ function Post(props) {
           position: 'absolute',
           bottom: 0,
           backgroundColor: 'white',
-        }}
-      />
+        }}>
+        <TextInput
+          placeholder="댓글"
+          onChange={(e)=>{
+            e.preventDefault();
+            setCommentToPost(e.nativeEvent.text);
+          }}
+        />
+        <TouchableOpacity
+          onPress={()=>{postCommentHandler();}}
+        >
+          <Text>등록</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
