@@ -5,3 +5,4 @@ export { default as Login } from './Login';
 export { default as SignUp } from './SignUp';
 export { default as SetUp } from './SetUp';
 export { default as Post } from './Post';
+export { default as MyPost } from './MyPost';

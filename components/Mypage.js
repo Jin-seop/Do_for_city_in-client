@@ -163,6 +163,7 @@ function Mypage(props) {
                 alignItems: 'center',
                 marginTop: 20,
               }}
+              onPress={() => props.navigation.navigate('내글')}
             >
               <Text style={{ fontSize: 24, marginLeft: 20 }}>내 글보기</Text>
             </TouchableOpacity>

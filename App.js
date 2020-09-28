@@ -11,6 +11,7 @@ import {
   SignUp,
   SetUp,
   Post,
+  MyPost,
 } from './components';
 
 const Stack = createStackNavigator();
@@ -69,6 +70,7 @@ export default function App() {
         <Stack.Screen name="회원가입" component={SignUp} />
         <Stack.Screen name="회원정보수정" component={SetUp} />
         <Stack.Screen name="게시글" component={Post} />
+        <Stack.Screen name="내글" component={MyPost} />
       </Stack.Navigator>
     </NavigationContainer>
   );
