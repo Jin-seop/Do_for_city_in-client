@@ -12,6 +12,7 @@ import {
   SetUp,
   Post,
   MyPost,
+  Write,
 } from './components';
 
 const Stack = createStackNavigator();
@@ -71,6 +72,7 @@ export default function App() {
         <Stack.Screen name="회원정보수정" component={SetUp} />
         <Stack.Screen name="게시글" component={Post} />
         <Stack.Screen name="내글" component={MyPost} />
+        <Stack.Screen name="글쓰기" component={Write} />
       </Stack.Navigator>
     </NavigationContainer>
   );

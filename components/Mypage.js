@@ -150,6 +150,9 @@ function Mypage(props) {
                 alignItems: 'center',
                 marginTop: 20,
               }}
+              onPress={() => {
+                props.navigation.navigate('글쓰기');
+              }}
             >
               <Text style={{ fontSize: 24, marginLeft: 20 }}>게시글 작성</Text>
             </TouchableOpacity>
