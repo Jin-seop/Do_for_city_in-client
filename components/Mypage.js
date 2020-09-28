@@ -95,7 +95,9 @@ function Mypage(props) {
               marginBottom: 15,
               marginTop: 15,
             }}
-            onPress={() => props.navigation.navigate('로그인')}
+            onPress={() =>
+              props.navigation.navigate('회원정보수정', { userId: data.userId })
+            }
           >
             <Text style={{ color: 'white' }}>회원정보 수정</Text>
           </TouchableOpacity>
