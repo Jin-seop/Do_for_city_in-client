@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -15,11 +15,12 @@ function Login(props) {
       .then((res) => {
         if (res.status === 201) {
           alert('로그인 성공');
-          props.navigation.navigate('Mypage', { userId });
+          props.navigation.navigate('마이페이지', { userId });
         }
       })
       .catch((err) => alert('유저정보가 잘 못 되었습니다.'));
   };
+
   return (
     <View
       style={{

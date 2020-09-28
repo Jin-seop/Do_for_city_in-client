@@ -31,7 +31,7 @@ function Mypage(props) {
     if (props.route.params) {
       getUserInfo();
     }
-  }, []);
+  }, [props]);
 
   return (
     <View style={{ backgroundColor: '#C4C4C4', width: '100%', height: '100%' }}>
