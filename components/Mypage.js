@@ -138,18 +138,33 @@ function Mypage(props) {
         </TouchableOpacity>
 
         {data ? (
-          <TouchableOpacity
-            style={{
-              height: 50,
-              borderBottomWidth: 0.2,
-              borderTopWidth: 0.2,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 20,
-            }}
-          >
-            <Text style={{ fontSize: 24, marginLeft: 20 }}>게시글 작성</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              style={{
+                height: 50,
+                borderBottomWidth: 0.2,
+                borderTopWidth: 0.2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, marginLeft: 20 }}>게시글 작성</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                height: 50,
+                borderBottomWidth: 0.2,
+                borderTopWidth: 0.2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 20,
+              }}
+            >
+              <Text style={{ fontSize: 24, marginLeft: 20 }}>내 글보기</Text>
+            </TouchableOpacity>
+          </View>
         ) : null}
 
         <TouchableOpacity
