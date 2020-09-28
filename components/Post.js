@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
+import Comment from './Comment';
 
 function Post(props) {
   const [title, setTitle] = useState('');
@@ -14,6 +15,7 @@ function Post(props) {
   const [photo, setPhoto] = useState('');
   const [createdAt, setCreatedAt] = useState('');
   const [commentToPost, setCommentToPost] = useState('');
+  const [comments, setComments] = useState('');
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -22,11 +24,11 @@ function Post(props) {
         createdAt: props.route.params.data.createdAt,
       })
         .then((res) => {
-          console.log('res:', res.data[0])
         setContent(res.data[0].content)
         setWriter(res.data[0].contents.userId)
         setTitle(res.data[0].title)
         setCreatedAt(res.data[0].createdAt)
+        setComments(res.data[0].commentsContent)
         // 이미지를 state로 지정해야 합니다.
         })
         .catch((err) => {
@@ -60,6 +62,12 @@ function Post(props) {
       getPostInfo();
   };
 
+  const commentHandler = () => {
+    return comments.map((comment, index) => {
+      return <Comment data={comment} key={index}></Comment>
+    })
+  }
+
   useEffect(() => {
     if (props.route.params.data.createdAt) {
       getPostInfo();
@@ -89,16 +97,7 @@ function Post(props) {
             <Text>{content}</Text>
           </View>
         </View>
-
-        <TouchableOpacity style={{ marginTop: 20, borderWidth: 0.4 }}>
-          <View style={{ marginLeft: 20, marginTop: 10 }}>
-            <View style={{ flexDirection: 'row', marginBottom: 10 }}>
-              <Text style={{ width: '30%' }}>이름</Text>
-              <Text style={{ width: '30%' }}>시간</Text>
-            </View>
-            <Text>댓글</Text>
-          </View>
-        </TouchableOpacity>
+        {comments?commentHandler():<Text>{''}</Text>}
       </ScrollView>
       <View
           style={{  
@@ -120,7 +119,14 @@ function Post(props) {
           }}
         />
         <TouchableOpacity
-          onPress={()=>{postCommentHandler();}}
+          onPress={()=>{
+            if (commentToPost.length >= 50) {
+            alert('글자수를 50자 미만으로 해주세요');
+          } else if (commentToPost.length === 0) {
+            alert('내용이 없습니다');
+          } else {
+            postCommentHandler();
+          }}}
         >
           <Text>등록</Text>
         </TouchableOpacity>
