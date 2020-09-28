@@ -8,13 +8,26 @@ import {
 } from 'react-native-gesture-handler';
 
 function Post(props) {
+  const [content, setContent] = useState('');
+  const [writer, setWriter] = useState('');
+  const [photo, setPhoto] = useState('');
+  const [createdAt, setCreatedAt] = useState('');
+
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
       Axios.post('http://13.125.205.76:5000/contentDetail', {
         title: props.route.params.data.title,
         createdAt: props.route.params.data.createdAt,
       })
-        .then((res) => console.log(res))
+        .then((res) => {
+        setContent(res.data[0].content)
+        setWriter(res.data[0].contents.userId)
+
+        let rowDate = res.data[0].createdAt;
+        let date = `${rowDate.substring(0, 4)}년 ${rowDate.substring(5,7)}월 ${rowDate.substring(8, 10)}일 ${rowDate.substring(11,13)}시 ${rowDate.substring(14,16)}분`;
+        setCreatedAt(date)
+        // 이미지를 state로 지정해야 합니다.
+        })
         .catch((err) => {
           alert('로그인 회원만 볼 수 있습니다.');
           props.navigation.goBack();
@@ -45,9 +58,10 @@ function Post(props) {
           <View
             style={{ marginLeft: 20, marginTop: 20, flexDirection: 'column' }}
           >
-            <Text>제목 : {}</Text>
-            <Text style={{ marginTop: 10, marginBottom: 10 }}>작성자 : {}</Text>
-            <Text>시간 : {}</Text>
+            <Text>제목 : {props.route.params.data.title}</Text>
+            <Text style={{ marginTop: 10, marginBottom: 10 }}>작성자 : {writer}</Text>
+            <Text>시간 : {createdAt}</Text>
+            <Text>{content}</Text>
           </View>
         </View>
 
