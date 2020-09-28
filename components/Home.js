@@ -11,6 +11,7 @@ import logo from '../assets/logo.png';
 function Home(props) {
   const [serchPost, setSerchPost] = useState('');
   const [postList, setPostList] = useState();
+
   const getPostList = () => {
     const list = [];
     Axios.get('http://13.125.205.76:5000/contents')
@@ -51,8 +52,23 @@ function Home(props) {
             }}
             key={index}
           >
-            <Image source={logo} style={{ width: 100, height: 100 }} />
-            <View style={{ flexDirection: 'column' }}>
+            <Image
+              source={logo}
+              style={{
+                width: 100,
+                height: 120,
+                backgroundColor: 'white',
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'column',
+                width: '100%',
+                height: 120,
+                backgroundColor: 'white',
+                paddingTop: 20,
+              }}
+            >
               <Text>제목 : {post.title}</Text>
               <Text style={{ marginTop: 10, marginBottom: 10 }}>
                 작성자 : {post.contents.userId}
@@ -64,7 +80,60 @@ function Home(props) {
       });
     }
   };
-  useEffect(() => getPostList(), [props]);
+
+  const serchPostListHandler = () => {
+    const list = [];
+
+    for (let i = postList.length; i >= 0; i--) {
+      if (postList[i] && postList[i].title.includes(serchPost)) {
+        list.push(postList[i]);
+      }
+    }
+
+    return list.map((post, index) => {
+      return (
+        <TouchableOpacity
+          style={{
+            height: 150,
+            backgroundColor: '#C4C4C4',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginBottom: 15,
+          }}
+          onPress={() => {
+            props.navigation.navigate('게시글', { data: post });
+          }}
+          key={index}
+        >
+          <Image
+            source={logo}
+            style={{
+              width: 100,
+              height: 120,
+              backgroundColor: 'white',
+            }}
+          />
+          <View
+            style={{
+              flexDirection: 'column',
+              width: '100%',
+              height: 120,
+              backgroundColor: 'white',
+              paddingTop: 20,
+            }}
+          >
+            <Text>제목 : {post.title}</Text>
+            <Text style={{ marginTop: 10, marginBottom: 10 }}>
+              작성자 : {post.contents.userId}
+            </Text>
+            <Text>시간 : {post.createdAt.slice(0, 10)}</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    });
+  };
+
+  useEffect(() => getPostList(), []);
 
   return (
     <View>
@@ -97,13 +166,14 @@ function Home(props) {
             paddingLeft: 10,
           }}
           placeholder="검색"
+          onChange={(e) => setSerchPost(e.nativeEvent.text)}
         />
       </View>
 
       <ScrollView
         style={{ marginTop: 15, flexDirection: 'column', height: '80%' }}
       >
-        {currentPostListHandler()}
+        {serchPost === '' ? currentPostListHandler() : serchPostListHandler()}
       </ScrollView>
     </View>
   );
