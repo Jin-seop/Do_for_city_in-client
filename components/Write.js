@@ -5,7 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import Axios from 'axios';
 
-function Write() {
+function Write(props) {
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -48,14 +48,25 @@ function Write() {
     } else {
       const FormData = require('form-data');
       const formData = new FormData();
-      formData.append('referenceFile', image);
+      formData.append('imgFile', {
+        name: 'referenceFile',
+        type: 'image/jpg',
+        uri: image,
+      });
       formData.append('title', title);
       formData.append('content', content);
       Axios.post('http://13.125.205.76:5000/contents/post', formData, {
         header: {
           'content-type': 'multipart/form-data',
         },
-      });
+      })
+        .then((res) => {
+          if (res.status === 200) {
+            alert('게시글 작성완료');
+            props.navigation.goBack();
+          }
+        })
+        .catch((err) => console.error(err));
     }
   };
 
