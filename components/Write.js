@@ -1,87 +1,237 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import React, { Component } from 'react';
+import {
+  ActivityIndicator,
+  Button,
+  Clipboard,
+  Image,
+  Share,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Constants } from 'expo';
+import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 
-function Write() {
-  const [image, setImage] = useState(null);
+export default class Write extends Component {
+  state = {
+    image: null,
+    uploading: false,
+  };
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setImage(result.uri);
-      alert('첨부완료');
+  render() {
+    let { image } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <StatusBar barStyle="default" />
+
+        <Text style={styles.exampleText}>
+          Example: Upload ImagePicker result
+        </Text>
+
+        <Button
+          onPress={this._pickImage}
+          title="Pick an image from camera roll"
+        />
+
+        <Button onPress={this._takePhoto} title="Take a photo" />
+
+        {this._maybeRenderImage()}
+        {this._maybeRenderUploadingOverlay()}
+      </View>
+    );
+  }
+
+  _maybeRenderUploadingOverlay = () => {
+    if (this.state.uploading) {
+      return (
+        <View style={[StyleSheet.absoluteFill, styles.maybeRenderUploading]}>
+          <ActivityIndicator color="#fff" size="large" />
+        </View>
+      );
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'android') {
-        const {
-          status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
-        if (status !== 'granted') {
-          alert('Sorry, we need camera roll permissions to make this work!');
-        }
-      }
-    })();
-  }, []);
+  _maybeRenderImage = () => {
+    let { image } = this.state;
 
-  return (
-    <View
-      style={{
-        backgroundColor: 'white',
-        alignItems: 'center',
-        height: '100%',
-        paddingTop: 30,
-      }}
-    >
-      <TextInput
-        placeholder="글쓰기"
-        style={{
-          borderWidth: 0.8,
-          width: '100%',
-          height: '50%',
-          paddingLeft: 30,
-        }}
-      />
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#2D3664',
-          height: 40,
-          width: 230,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 5,
-          marginTop: 50,
-        }}
-        onPress={() => {
-          console.log(1);
-          pickImage();
-        }}
-      >
-        <Text style={{ color: 'white' }}>사진 첨부</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          backgroundColor: '#2D3664',
-          height: 40,
-          width: 230,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 5,
-          marginTop: 50,
-        }}
-      >
-        <Text style={{ color: 'white' }}>글 작성하기</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    if (!image) {
+      return;
+    }
+
+    return (
+      <View style={styles.maybeRenderContainer}>
+        <View style={styles.maybeRenderImageContainer}>
+          <Image source={{ uri: image }} style={styles.maybeRenderImage} />
+        </View>
+
+        <Text
+          onPress={this._copyToClipboard}
+          onLongPress={this._share}
+          style={styles.maybeRenderImageText}
+        >
+          {image}
+        </Text>
+      </View>
+    );
+  };
+
+  _share = () => {
+    Share.share({
+      message: this.state.image,
+      title: 'Check out this photo',
+      url: this.state.image,
+    });
+  };
+
+  _copyToClipboard = () => {
+    Clipboard.setString(this.state.image);
+    alert('Copied image URL to clipboard');
+  };
+
+  _takePhoto = async () => {
+    const { status: cameraPerm } = await Permissions.askAsync(
+      Permissions.CAMERA
+    );
+
+    const { status: cameraRollPerm } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    // only if user allows permission to camera AND camera roll
+    if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchCameraAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+
+      this._handleImagePicked(pickerResult);
+    }
+  };
+
+  _pickImage = async () => {
+    const { status: cameraRollPerm } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+
+    // only if user allows permission to camera roll
+    if (cameraRollPerm === 'granted') {
+      let pickerResult = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+
+      this._handleImagePicked(pickerResult);
+    }
+  };
+
+  _handleImagePicked = async (pickerResult) => {
+    let uploadResponse, uploadResult;
+
+    try {
+      this.setState({
+        uploading: true,
+      });
+
+      if (!pickerResult.cancelled) {
+        uploadResponse = await uploadImageAsync(pickerResult.uri);
+        uploadResult = await uploadResponse.json();
+
+        this.setState({
+          image: uploadResult.location,
+        });
+      }
+    } catch (e) {
+      console.log({ uploadResponse });
+      console.log({ uploadResult });
+      console.log({ e });
+      alert('Upload failed, sorry :(');
+    } finally {
+      this.setState({
+        uploading: false,
+      });
+    }
+  };
 }
 
-export default Write;
+async function uploadImageAsync(uri) {
+  let apiUrl = 'http://13.125.205.76:5000//contents/post';
+
+  // Note:
+  // Uncomment this if you want to experiment with local server
+  //
+  // if (Constants.isDevice) {
+  //   apiUrl = `https://your-ngrok-subdomain.ngrok.io/upload`;
+  // } else {
+  //   apiUrl = `http://localhost:3000/upload`
+  // }
+
+  let uriParts = uri.split('.');
+  let fileType = uriParts[uriParts.length - 1];
+
+  let formData = new FormData();
+  formData.append('photo', {
+    uri,
+    name: `photo.${fileType}`,
+    type: `image/${fileType}`,
+  });
+
+  let options = {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  return fetch(apiUrl, options);
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
+  exampleText: {
+    fontSize: 20,
+    marginBottom: 20,
+    marginHorizontal: 15,
+    textAlign: 'center',
+  },
+  maybeRenderUploading: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'center',
+  },
+  maybeRenderContainer: {
+    borderRadius: 3,
+    elevation: 2,
+    marginTop: 30,
+    shadowColor: 'rgba(0,0,0,1)',
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      height: 4,
+      width: 4,
+    },
+    shadowRadius: 5,
+    width: 250,
+  },
+  maybeRenderImageContainer: {
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 3,
+    overflow: 'hidden',
+  },
+  maybeRenderImage: {
+    height: 250,
+    width: 250,
+  },
+  maybeRenderImageText: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+});

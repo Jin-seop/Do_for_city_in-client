@@ -24,12 +24,12 @@ function Post(props) {
         createdAt: props.route.params.data.createdAt,
       })
         .then((res) => {
-        setContent(res.data[0].content)
-        setWriter(res.data[0].contents.userId)
-        setTitle(res.data[0].title)
-        setCreatedAt(res.data[0].createdAt)
-        setComments(res.data[0].commentsContent)
-        // 이미지를 state로 지정해야 합니다.
+          setContent(res.data[0].content);
+          setWriter(res.data[0].contents.userId);
+          setTitle(res.data[0].title);
+          setCreatedAt(res.data[0].createdAt);
+          setComments(res.data[0].commentsContent);
+          // 이미지를 state로 지정해야 합니다.
         })
         .catch((err) => {
           alert('로그인 회원만 볼 수 있습니다.');
@@ -42,8 +42,8 @@ function Post(props) {
     Axios.post(
       'http://13.125.205.76:5000/comments',
       {
-        title:title,
-        createdAt:createdAt,
+        title: title,
+        createdAt: createdAt,
         comment: commentToPost,
       },
       {
@@ -59,14 +59,14 @@ function Post(props) {
       .catch(function (err) {
         alert(err);
       });
-      getPostInfo();
+    getPostInfo();
   };
 
   const commentHandler = () => {
     return comments.map((comment, index) => {
-      return <Comment data={comment} key={index}></Comment>
-    })
-  }
+      return <Comment data={comment} key={index}></Comment>;
+    });
+  };
 
   useEffect(() => {
     if (props.route.params.data.createdAt) {
@@ -92,15 +92,17 @@ function Post(props) {
             style={{ marginLeft: 20, marginTop: 20, flexDirection: 'column' }}
           >
             <Text>제목 : {props.route.params.data.title}</Text>
-            <Text style={{ marginTop: 10, marginBottom: 10 }}>작성자 : {writer}</Text>
+            <Text style={{ marginTop: 10, marginBottom: 10 }}>
+              작성자 : {writer}
+            </Text>
             <Text>시간 : {createdAt}</Text>
             <Text>{content}</Text>
           </View>
         </View>
-        {comments?commentHandler():<Text>{''}</Text>}
+        {comments ? commentHandler() : <Text>{''}</Text>}
       </ScrollView>
       <View
-          style={{  
+        style={{
           justifyContent: 'center',
           borderWidth: 0.8,
           height: 40,
@@ -110,23 +112,25 @@ function Post(props) {
           position: 'absolute',
           bottom: 0,
           backgroundColor: 'white',
-        }}>
+        }}
+      >
         <TextInput
           placeholder="댓글"
-          onChange={(e)=>{
+          onChange={(e) => {
             e.preventDefault();
             setCommentToPost(e.nativeEvent.text);
           }}
         />
         <TouchableOpacity
-          onPress={()=>{
+          onPress={() => {
             if (commentToPost.length >= 50) {
-            alert('글자수를 50자 미만으로 해주세요');
-          } else if (commentToPost.length === 0) {
-            alert('내용이 없습니다');
-          } else {
-            postCommentHandler();
-          }}}
+              alert('글자수를 50자 미만으로 해주세요');
+            } else if (commentToPost.length === 0) {
+              alert('내용이 없습니다');
+            } else {
+              postCommentHandler();
+            }
+          }}
         >
           <Text>등록</Text>
         </TouchableOpacity>
