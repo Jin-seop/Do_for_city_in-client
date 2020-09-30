@@ -3,7 +3,7 @@
 '도시인'을 이용해보세요!
 DO.SI.IN은 남는 식재료를 도시락 형태로 공유, 거래할 수 있는 플랫폼 입니다.
 
-<img width="300" height="600" src="https://user-images.githubusercontent.com/62422486/90718687-841f6d00-e2ed-11ea-8cf8-a91576b065f5.png">
+<img width="600" height="600" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FFyTWt%2FbtqJUNxdFtD%2F9LQ6xt14Os6LSun83rJToK%2Fimg.jpg">
 
 # :iphone: About service
 - 도시인은 회원가입을 해야 이용이 가능합니다. 회원가입 버튼을 클릭해 아이디를 생성합니다.
@@ -94,18 +94,3 @@ Back-end
 - Back-end
 - GitGub : https://github.com/leegiman911
 - Gmail : giman979@gmail.com
-<!-- ## 이모지
-
-> 추가 :heavy_plus_sign:
-
-> 미완성 :soon:
-
-> 수정 :recycle:
-
-> 삭제 :no_entry_sign:
-
-> 머지 :hand:
-
-> 패키지 설치 :flags:
-
-> 오류 발견 :imp: -->
