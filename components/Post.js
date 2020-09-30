@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, Alert } from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -18,6 +18,9 @@ function Post(props) {
   const [comments, setComments] = useState('');
   const [image, setImage] = useState(null);
   const [currentUser, setCurrentUser] = useState('');
+  const [isReviseMode, setIsReviseMode] = useState(false);
+  const [commentCreatedAt, setCommentCreatedAt] = useState('');
+  const [commentUserId, setCommentUserId] = useState('');
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -43,36 +46,85 @@ function Post(props) {
   };
 
   const postCommentHandler = () => {
-    Axios.post(
-      'http://13.125.205.76:5000/comments',
-      {
-        title: title,
-        createdAt: createdAt,
-        comment: commentToPost,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
+    if (commentToPost.length >= 50) {
+      return alert('글자수를 50자 미만으로 해주세요');
+    }
+    if (commentToPost.length === 0) {
+      return alert('내용이 없습니다');
+    }
+    if (!isReviseMode) {
+      Axios.post(
+        'http://13.125.205.76:5000/comments',
+        {
+          title: title,
+          createdAt: createdAt,
+          comment: commentToPost,
         },
-      }
-    )
-      .then(function (res) {
-        alert('댓글 등록완료');
-        getPostInfo();
-        setCommentToPost('');
+        {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'Access-Control-Allow-Origin': '*',
+          },
+        }
+      )
+        .then((res) => {
+          alert('댓글 등록완료');
+          getPostInfo();
+          setCommentToPost('');
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+    if (isReviseMode) {
+      Axios.put('http://13.125.205.76:5000/contents/comment/update', {
+        createdAt: commentCreatedAt,
+        comment: commentToPost,
+        userId: commentUserId,
       })
-      .catch(function (err) {
-        alert(err);
-      });
+        .then((res) => {
+          if (res.status === 200) {
+            alert('댓글 수정완료');
+            getPostInfo();
+            setCommentToPost('');
+          }
+        })
+        .catch((err) => console.error(err));
+    }
   };
 
   const commentHandler = () => {
     return comments.map((comment, index) => {
       return (
-        <Comment data={comment} currentUser={currentUser} key={index}></Comment>
+        <Comment
+          data={comment}
+          currentUser={currentUser}
+          commentReviseHandler={commentReviseHandler}
+          key={index}
+        ></Comment>
       );
     });
+  };
+
+  const commentReviseHandler = (comment, userId, createdAt) => {
+    if (userId === currentUser) {
+      Alert.alert('댓글 수정', '수정하시겠습니까?', [
+        {
+          text: '취소',
+          onPress: () => setIsReviseMode(false),
+          style: 'cancel',
+        },
+        {
+          text: '수정하기',
+          onPress: () => {
+            setIsReviseMode(true);
+            setCommentToPost(comment);
+            setCommentCreatedAt(createdAt);
+            setCommentUserId(userId);
+          },
+        },
+      ]);
+    }
   };
 
   useEffect(() => {
