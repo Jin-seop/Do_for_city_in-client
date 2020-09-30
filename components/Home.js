@@ -133,7 +133,11 @@ function Home(props) {
     });
   };
 
-  useEffect(() => getPostList(), []);
+  useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      getPostList();
+    });
+  }, [props.navigation]);
 
   return (
     <View>

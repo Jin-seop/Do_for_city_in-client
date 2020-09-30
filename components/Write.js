@@ -45,6 +45,8 @@ function Write(props) {
   const handleSubmit = () => {
     if (title === '' || content === '') {
       Alert.alert('게시물 정보를 입력해주세요.');
+    } else if (!image) {
+      alert('사진을 첨부해주세요');
     } else {
       const FormData = require('form-data');
       const formData = new FormData();
@@ -63,7 +65,7 @@ function Write(props) {
         .then((res) => {
           if (res.status === 200) {
             alert('게시글 작성완료');
-            props.navigation.goBack();
+            props.navigation.navigate('Navigation', { 1: 1 });
           }
         })
         .catch((err) => console.error(err));
