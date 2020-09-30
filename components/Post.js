@@ -17,6 +17,7 @@ function Post(props) {
   const [commentToPost, setCommentToPost] = useState('');
   const [comments, setComments] = useState('');
   const [image, setImage] = useState(null);
+  const [currentUser, setCurrentUser] = useState('');
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -25,14 +26,16 @@ function Post(props) {
         createdAt: props.route.params.data.createdAt,
       })
         .then((res) => {
-          setContent(res.data[0].content);
-          setWriter(res.data[0].contents.userId);
-          setTitle(res.data[0].title);
-          setCreatedAt(res.data[0].createdAt);
-          setComments(res.data[0].commentsContent);
-          setImage(res.data[0].referenceFile);
+          setCurrentUser(res.data[0]);
+          setContent(res.data[1][0].content);
+          setWriter(res.data[1][0].contents.userId);
+          setTitle(res.data[1][0].title);
+          setCreatedAt(res.data[1][0].createdAt);
+          setComments(res.data[1][0].commentsContent);
+          setImage(res.data[1][0].referenceFile);
         })
         .catch((err) => {
+          console.error(err);
           alert('로그인 회원만 볼 수 있습니다.');
           props.navigation.goBack();
         });
@@ -56,16 +59,19 @@ function Post(props) {
     )
       .then(function (res) {
         alert('댓글 등록완료');
+        getPostInfo();
+        setCommentToPost('');
       })
       .catch(function (err) {
         alert(err);
       });
-    getPostInfo();
   };
 
   const commentHandler = () => {
     return comments.map((comment, index) => {
-      return <Comment data={comment} key={index}></Comment>;
+      return (
+        <Comment data={comment} currentUser={currentUser} key={index}></Comment>
+      );
     });
   };
 
@@ -95,13 +101,20 @@ function Post(props) {
           <View
             style={{ marginLeft: 20, marginTop: 10, flexDirection: 'column' }}
           >
-            <Text style={{ fontSize: 18 }}>
-              제목 : {props.route.params.data.title}
-            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                {props.route.params.data.title}
+              </Text>
+              <Text
+                style={{ fontSize: 16, color: 'grey', paddingLeft: 20 }}
+              >{`${createdAt.substring(0, 4)}년 ${createdAt.substring(
+                5,
+                7
+              )}월 ${createdAt.substring(8, 10)}일`}</Text>
+            </View>
             <Text style={{ marginTop: 5, marginBottom: 5, fontSize: 18 }}>
-              작성자 : {writer}
+              {`writer : ${writer}`}
             </Text>
-            <Text style={{ fontSize: 18 }}>시간 : {createdAt}</Text>
             <Text style={{ fontSize: 18, marginTop: 10 }}>{content}</Text>
           </View>
         </View>
@@ -112,19 +125,13 @@ function Post(props) {
       <View
         style={{
           flexDirection: 'row',
-          // // justifyContent: 'center',
           borderWidth: 0.8,
           height: 50,
-          // width: '100%',
-          // marginTop: 50,
-          // paddingLeft: 10,
-          // position: 'absolute',
-          // bottom: 0,
-          // backgroundColor: 'white',
         }}
       >
         <TextInput
           placeholder="댓글"
+          value={commentToPost}
           style={{
             margin: 5,
             paddingLeft: 10,

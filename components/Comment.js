@@ -2,14 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default Comment = ({ data }) => {
+export default Comment = ({ data, currentUser }) => {
+  console.log(data.comments.userId);
+  console.log(currentUser);
   let createdAt = `${data.createdAt.substring(
     0,
     4
   )}년 ${data.createdAt.substring(5, 7)}월 ${data.createdAt.substring(
     8,
     10
-  )}일 ${data.createdAt.substring(11, 16)}`;
+  )}일`;
   return (
     <TouchableOpacity style={{ marginBottom: 15, marginLeft: 10 }}>
       <View>
