@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import {
   ScrollView,
   TextInput,
@@ -16,6 +16,7 @@ function Post(props) {
   const [createdAt, setCreatedAt] = useState('');
   const [commentToPost, setCommentToPost] = useState('');
   const [comments, setComments] = useState('');
+  const [image, setImage] = useState(null);
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -29,7 +30,7 @@ function Post(props) {
           setTitle(res.data[0].title);
           setCreatedAt(res.data[0].createdAt);
           setComments(res.data[0].commentsContent);
-          // 이미지를 state로 지정해야 합니다.
+          setImage(res.data[0].referenceFile);
         })
         .catch((err) => {
           alert('로그인 회원만 볼 수 있습니다.');
@@ -84,7 +85,10 @@ function Post(props) {
             alignItems: 'center',
           }}
         >
-          <Text>사진</Text>
+          <Image
+            source={{ uri: image, width: '100%', height: '100%' }}
+            resizeMode="cover"
+          />
         </View>
 
         <View style={{ borderWidth: 0.4, marginTop: 15, height: 250 }}>
