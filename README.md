@@ -22,10 +22,10 @@ DO.SI.IN은 남는 식재료를 도시락 형태로 공유, 거래할 수 있는
 # :sparkles: Flow chart
 <details>
 <summary>클라이언트 기능 flow(펼쳐보기)</summary>
-<img src="https://camo.githubusercontent.com/f6c7fb930af6b4dce17ea2018f0477de97bc2390/68747470733a2f2f696d67312e6461756d63646e2e6e65742f7468756d622f523132383078302f3f73636f64653d6d746973746f72793226666e616d653d6874747073253341253246253246626c6f672e6b616b616f63646e2e6e6574253246646e2532465a32724a4f253246627471477572716969444d25324674797477653679734b4a765335514b30343454586f4b253246696d672e706e67" alt="클라이언트 기능 flow">
+<img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcczTvx%2FbtqJVpo5RHx%2FLvwTBEW9RZIiLZikUVAcak%2Fimg.png" alt="클라이언트 기능 flow">
 </details>
 
-- [Figma 링크](https://www.figma.com/file/r2t9NhIp8O0FR2OYtrP8Zk/DO.SI.IN-Client?node-id=0%3A1)
+- [Figma 링크](https://www.figma.com/file/lmPYpqSSEFGEerMuovIuzX/%EB%8F%84%EC%8B%9C%EC%9D%B8-css-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81?node-id=0%3A1)
 
 <details>
 <summary>서버 기능 flow</summary>
