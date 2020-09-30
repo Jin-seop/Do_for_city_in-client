@@ -12,7 +12,6 @@ function Post(props) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [writer, setWriter] = useState('');
-  const [photo, setPhoto] = useState('');
   const [createdAt, setCreatedAt] = useState('');
   const [commentToPost, setCommentToPost] = useState('');
   const [comments, setComments] = useState('');
