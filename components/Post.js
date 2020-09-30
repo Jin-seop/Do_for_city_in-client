@@ -17,6 +17,7 @@ function Post(props) {
   const [commentToPost, setCommentToPost] = useState('');
   const [comments, setComments] = useState('');
   const [image, setImage] = useState(null);
+  const [currentUser, setCurrentUser] = useState('');
 
   const getPostInfo = () => {
     if (props.route.params.data.createdAt) {
@@ -25,14 +26,16 @@ function Post(props) {
         createdAt: props.route.params.data.createdAt,
       })
         .then((res) => {
-          setContent(res.data[0].content);
-          setWriter(res.data[0].contents.userId);
-          setTitle(res.data[0].title);
-          setCreatedAt(res.data[0].createdAt);
-          setComments(res.data[0].commentsContent);
-          setImage(res.data[0].referenceFile);
+          setCurrentUser(res.data[0]);
+          setContent(res.data[1][0].content);
+          setWriter(res.data[1][0].contents.userId);
+          setTitle(res.data[1][0].title);
+          setCreatedAt(res.data[1][0].createdAt);
+          setComments(res.data[1][0].commentsContent);
+          setImage(res.data[1][0].referenceFile);
         })
         .catch((err) => {
+          console.error(err);
           alert('로그인 회원만 볼 수 있습니다.');
           props.navigation.goBack();
         });
@@ -56,16 +59,19 @@ function Post(props) {
     )
       .then(function (res) {
         alert('댓글 등록완료');
+        getPostInfo();
+        setCommentToPost('');
       })
       .catch(function (err) {
         alert(err);
       });
-    getPostInfo();
   };
 
   const commentHandler = () => {
     return comments.map((comment, index) => {
-      return <Comment data={comment} key={index}></Comment>;
+      return (
+        <Comment data={comment} currentUser={currentUser} key={index}></Comment>
+      );
     });
   };
 
@@ -93,39 +99,62 @@ function Post(props) {
 
         <View style={{ borderWidth: 0.4, marginTop: 15, height: 250 }}>
           <View
-            style={{ marginLeft: 20, marginTop: 20, flexDirection: 'column' }}
+            style={{ marginLeft: 20, marginTop: 10, flexDirection: 'column' }}
           >
-            <Text>제목 : {props.route.params.data.title}</Text>
-            <Text style={{ marginTop: 10, marginBottom: 10 }}>
-              작성자 : {writer}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                {props.route.params.data.title}
+              </Text>
+              <Text
+                style={{ fontSize: 16, color: 'grey', paddingLeft: 20 }}
+              >{`${createdAt.substring(0, 4)}년 ${createdAt.substring(
+                5,
+                7
+              )}월 ${createdAt.substring(8, 10)}일`}</Text>
+            </View>
+            <Text style={{ marginTop: 5, marginBottom: 5, fontSize: 18 }}>
+              {`writer : ${writer}`}
             </Text>
-            <Text>시간 : {createdAt}</Text>
-            <Text>{content}</Text>
+            <Text style={{ fontSize: 18, marginTop: 10 }}>{content}</Text>
           </View>
         </View>
-        {comments ? commentHandler() : <Text>{''}</Text>}
+        <View style={{ marginLeft: 10, marginTop: 10 }}>
+          {comments ? commentHandler() : <Text>{''}</Text>}
+        </View>
       </ScrollView>
       <View
         style={{
-          justifyContent: 'center',
+          flexDirection: 'row',
           borderWidth: 0.8,
-          height: 40,
-          width: '100%',
-          marginTop: 50,
-          paddingLeft: 10,
-          position: 'absolute',
-          bottom: 0,
-          backgroundColor: 'white',
+          height: 50,
         }}
       >
         <TextInput
           placeholder="댓글"
+          value={commentToPost}
+          style={{
+            margin: 5,
+            paddingLeft: 10,
+            borderRadius: 5,
+            borderWidth: 0.8,
+            width: 325,
+          }}
           onChange={(e) => {
             e.preventDefault();
             setCommentToPost(e.nativeEvent.text);
           }}
         />
         <TouchableOpacity
+          style={{
+            marginTop: 5,
+            marginRight: 5,
+            marginBottom: 5,
+            borderWidth: 0.8,
+            borderRadius: 5,
+            height: 40,
+            width: 70,
+            justifyContent: 'center',
+          }}
           onPress={() => {
             if (commentToPost.length >= 50) {
               alert('글자수를 50자 미만으로 해주세요');
@@ -136,7 +165,13 @@ function Post(props) {
             }
           }}
         >
-          <Text>등록</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            등록
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
