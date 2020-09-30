@@ -12,16 +12,6 @@ function Home(props) {
   const [serchPost, setSerchPost] = useState('');
   const [postList, setPostList] = useState();
 
-  const getPostList = () => {
-    const list = [];
-    Axios.get('http://13.125.205.76:5000/contents')
-      .then((res) => res.data)
-      .then((dataList) => {
-        setPostList(dataList);
-      })
-      .catch((err) => console.log(err));
-  };
-
   const currentPostListHandler = () => {
     if (!postList) {
       Axios.get('http://13.125.205.76:5000/contents')
@@ -135,7 +125,7 @@ function Home(props) {
 
   useEffect(() => {
     props.navigation.addListener('focus', () => {
-      getPostList();
+      currentPostListHandler();
     });
   }, [props.navigation]);
 

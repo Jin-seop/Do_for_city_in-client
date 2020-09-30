@@ -20,10 +20,9 @@ function Post(props) {
   const [isReviseMode, setIsReviseMode] = useState(false);
   const [commentCreatedAt, setCommentCreatedAt] = useState('');
   const [commentUserId, setCommentUserId] = useState('');
-
   const getPostInfo = () => {
-    if (props.route.params.data.createdAt) {
-      Axios.post('http://13.125.205.76:5000/contentDetail', {
+    if (props.route.params.data) {
+      return Axios.post('http://13.125.205.76:5000/contentDetail', {
         title: props.route.params.data.title,
         createdAt: props.route.params.data.createdAt,
       })
@@ -37,10 +36,46 @@ function Post(props) {
           setImage(res.data[1][0].referenceFile);
         })
         .catch((err) => {
-          console.error(err);
           alert('로그인 회원만 볼 수 있습니다.');
           props.navigation.goBack();
         });
+    }
+  };
+
+  const getMyPostInfo = () => {
+    if (props.route.params.mydata.comment) {
+      Axios.post('http://13.125.205.76:5000/mypage/toComment', {
+        fk_contentId: props.route.params.mydata.fk_contentId,
+      })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 201) {
+            setContent(res.data[0].content);
+            setWriter(res.data[0].contents.userId);
+            setTitle(res.data[0].title);
+            setCreatedAt(res.data[0].createdAt);
+            setComments(res.data[0].commentsContent);
+            setImage(res.data[0].referenceFile);
+          }
+        })
+        .catch((err) => console.error(err));
+    }
+    if (props.route.params.mydata.title) {
+      Axios.post('http://13.125.205.76:5000/mypage/toContent', {
+        title: props.route.params.mydata.title,
+        createdAt: props.route.params.mydata.createdAt,
+      })
+        .then((res) => {
+          if (res.status === 201) {
+            setContent(res.data[0].content);
+            setWriter(res.data[0].contents.userId);
+            setTitle(res.data[0].title);
+            setCreatedAt(res.data[0].createdAt);
+            setComments(res.data[0].commentsContent);
+            setImage(res.data[0].referenceFile);
+          }
+        })
+        .catch((err) => console.error(err));
     }
   };
 
@@ -127,10 +162,16 @@ function Post(props) {
   };
 
   useEffect(() => {
-    if (props.route.params.data.createdAt) {
+    if (props.route.params.mydata) {
+      getMyPostInfo();
+    }
+  }, [props]);
+  useEffect(() => {
+    if (props.route.params.data) {
       getPostInfo();
     }
-  }, []);
+  }, [props]);
+
   return (
     <View style={{ flex: 1, width: '100%', height: '100%' }}>
       <ScrollView>
@@ -154,7 +195,7 @@ function Post(props) {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                {props.route.params.data.title}
+                {props.route.params.data ? props.route.params.data.title : null}
               </Text>
               <Text
                 style={{ fontSize: 16, color: 'grey', paddingLeft: 20 }}

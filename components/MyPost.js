@@ -41,7 +41,7 @@ function MyPost(props) {
             }}
             key={index}
             onPress={() =>
-              props.navigation.navigate('게시글', { data: comment })
+              props.navigation.navigate('게시글', { mydata: comment })
             }
           >
             <Text style={{ paddingBottom: 10 }}>- 댓글 -</Text>
@@ -66,7 +66,7 @@ function MyPost(props) {
             }}
             key={index}
             onPress={() =>
-              props.navigation.navigate('게시글', { data: content })
+              props.navigation.navigate('게시글', { mydata: content })
             }
           >
             <Text style={{ paddingBottom: 10 }}>- 게시글 -</Text>
@@ -77,7 +77,11 @@ function MyPost(props) {
     });
   };
 
-  useEffect(getPostInfo, []);
+  useEffect(() => {
+    props.navigation.addListener('focus', () => {
+      getPostInfo();
+    });
+  }, [props.navigation]);
 
   return (
     <View
