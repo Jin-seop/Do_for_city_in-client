@@ -89,39 +89,61 @@ function Post(props) {
 
         <View style={{ borderWidth: 0.4, marginTop: 15, height: 250 }}>
           <View
-            style={{ marginLeft: 20, marginTop: 20, flexDirection: 'column' }}
+            style={{ marginLeft: 20, marginTop: 10, flexDirection: 'column' }}
           >
-            <Text>제목 : {props.route.params.data.title}</Text>
-            <Text style={{ marginTop: 10, marginBottom: 10 }}>
+            <Text style={{ fontSize: 18 }}>
+              제목 : {props.route.params.data.title}
+            </Text>
+            <Text style={{ marginTop: 5, marginBottom: 5, fontSize: 18 }}>
               작성자 : {writer}
             </Text>
-            <Text>시간 : {createdAt}</Text>
-            <Text>{content}</Text>
+            <Text style={{ fontSize: 18 }}>시간 : {createdAt}</Text>
+            <Text style={{ fontSize: 18, marginTop: 10 }}>{content}</Text>
           </View>
         </View>
-        {comments ? commentHandler() : <Text>{''}</Text>}
+        <View style={{ marginLeft: 10, marginTop: 10 }}>
+          {comments ? commentHandler() : <Text>{''}</Text>}
+        </View>
       </ScrollView>
       <View
         style={{
-          justifyContent: 'center',
+          flexDirection: 'row',
+          // // justifyContent: 'center',
           borderWidth: 0.8,
-          height: 40,
-          width: '100%',
-          marginTop: 50,
-          paddingLeft: 10,
-          position: 'absolute',
-          bottom: 0,
-          backgroundColor: 'white',
+          height: 50,
+          // width: '100%',
+          // marginTop: 50,
+          // paddingLeft: 10,
+          // position: 'absolute',
+          // bottom: 0,
+          // backgroundColor: 'white',
         }}
       >
         <TextInput
           placeholder="댓글"
+          style={{
+            margin: 5,
+            paddingLeft: 10,
+            borderRadius: 5,
+            borderWidth: 0.8,
+            width: 325,
+          }}
           onChange={(e) => {
             e.preventDefault();
             setCommentToPost(e.nativeEvent.text);
           }}
         />
         <TouchableOpacity
+          style={{
+            marginTop: 5,
+            marginRight: 5,
+            marginBottom: 5,
+            borderWidth: 0.8,
+            borderRadius: 5,
+            height: 40,
+            width: 70,
+            justifyContent: 'center',
+          }}
           onPress={() => {
             if (commentToPost.length >= 50) {
               alert('글자수를 50자 미만으로 해주세요');
@@ -132,7 +154,13 @@ function Post(props) {
             }
           }}
         >
-          <Text>등록</Text>
+          <Text
+            style={{
+              textAlign: 'center',
+            }}
+          >
+            등록
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
